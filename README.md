@@ -1,4 +1,4 @@
-# Job Hunter
+# Hunter
 
 A personal job-lead tool. It scrapes job listings, **ranks them against your taste**
 (pay, remote, recency, interesting roles — not just "developer"), shows only what's **new**
@@ -6,7 +6,7 @@ since your last run, and gives you **real apply links**. Comes with a CLI and a 
 
 ## What it does
 
-- Searches multiple queries (dev jobs + side-quests + good-experience gigs)
+- Searches multiple queries
 - Scores each job so the best float to the top
 - Remembers what it's seen → each run is a fresh shortlist, not the same list
 - Saves everything to `jobs_today.csv` with links, salary, recency, and a description snippet
@@ -27,7 +27,7 @@ python3 job_hunter.py
 You'll get a ranked list of new jobs in the terminal, and a `jobs_today.csv` you can open
 in any spreadsheet.
 
-## Tune it (this is the fun part)
+## Tune it
 
 Two dials, both at the top of `job_hunter.py`:
 
