@@ -45,10 +45,11 @@ BEACHES = {
         "fire_pit": False,
         "notes": "Quiet at the end of 54th Street. No lifeguards to bother, not normally overcrowded, no beach tournaments. Just the water and the sun. Most people don't even know this beach exists. Juneteenth falls on a Friday this year so expect a little more company than usual — but nothing like the main beaches. This one stays under the radar.",
         "food_nearby": [
-            {"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."},
-            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."},
-            {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."},
-            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."},
+            {"name": "Brothers Keeper BBQ", "type": "BBQ", "price": "$$", "distance": "1.5mi", "note": "Black-owned Long Beach BBQ by Mo Stewart. Central Texas style with a California twist — oak-smoked brisket, dry-rubbed ribs, sides rooted in his grandmother's cooking. Opened 2026, already a local favorite.", "wait": "sells out by afternoon — go earlier in the day", "black_owned": True},
+            {"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever.", "wait": "expect a wait, no reservations — line moves but it moves slow on busy days", "black_owned": False},
+            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good.", "wait": "usually moves fast", "black_owned": False},
+            {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain.", "wait": "can get a wait on weekends", "black_owned": False},
+            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key.", "wait": None, "black_owned": False},
         ],
         "drinks_nearby": [
             {"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.6mi", "note": "Long Beach's best tap list. 40+ drafts, real craft selection, good atmosphere on 2nd Street."},

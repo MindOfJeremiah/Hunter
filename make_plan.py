@@ -532,6 +532,26 @@ def generate(default_key, for_name=None, note=None):
       font-weight: 300;
     }}
 
+    .bo-badge {{
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(201,151,58,0.1);
+      color: #7A5C18;
+      border: 1px solid rgba(201,151,58,0.32);
+      letter-spacing: 0.07em;
+      margin-top: 9px;
+    }}
+
+    .wait-note {{
+      display: block;
+      font-size: 12px;
+      color: #A07040;
+      font-style: italic;
+      font-weight: 300;
+      margin-top: 7px;
+    }}
+
     /* Map link */
     .map-link {{
       display: inline-flex;
@@ -897,6 +917,8 @@ function selectBeach(key) {{
       <div class="food-top"><span class="food-name">${{f.name}}</span><span class="price-tag">${{f.price}}</span></div>
       <div class="food-meta">${{f.type}} · ${{f.distance}}</div>
       <div class="food-note">${{f.note}}</div>
+      ${{f.black_owned ? '<span class="bo-badge">✦ black owned</span>' : ''}}
+      ${{f.wait ? `<span class="wait-note">⏱ ${{f.wait}}</span>` : ''}}
       <a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank">&#x2197; open in maps</a>
     </div>`;
   }}).join('');
