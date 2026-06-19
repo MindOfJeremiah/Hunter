@@ -532,13 +532,6 @@ def generate(default_key, for_name=None, note=None):
       font-weight: 300;
     }}
 
-    /* Drink cards — same layout, gold picked border */
-    .drink-card.picked {{ border-left-color: var(--gold); background: rgba(201,151,58,0.05); }}
-    .drink-card.picked .food-name {{ color: #7A5A1A; }}
-    .drink-card.picked .picked-label {{ color: #A07828; }}
-    .picked-label {{ font-size:12px; color:var(--forest-mid); font-style:italic; margin-top:9px; display:none; }}
-    .drink-card.picked .picked-label {{ display:block; }}
-
     /* Map link */
     .map-link {{
       display: inline-flex;
@@ -758,7 +751,7 @@ def generate(default_key, for_name=None, note=None):
   </div>
 
   <div class="hero-content">
-    <div class="hero-label">✦ juneteenth 2026 ✦</div>
+    <div class="hero-label">✦ juneteenth · friday, june 19 ✦</div>
     <div class="hero-for">a day for</div>
     <div class="hero-name">{name_display}</div>
     <div class="hero-beach-name" id="hero-beach">...</div>
@@ -812,10 +805,6 @@ def generate(default_key, for_name=None, note=None):
     <div class="food-list" id="food-list"></div>
 
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
-    <div class="section-title">sip something</div>
-    <div class="food-list" id="drinks-list"></div>
-
-    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">while you're there</div>
     <ul class="pack-list" id="spots-list"></ul>
 
@@ -858,7 +847,6 @@ def generate(default_key, for_name=None, note=None):
 const BEACHES = {beaches_js};
 const DEFAULT = "{default_key}";
 const GLOBAL_KEY = "beach_day_global";
-const PRICE_LABEL = {{"$":"$","$$":"$$","$$$":"$$$"}};
 
 function saveGlobal(field, val) {{
   const d = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{{}}');
@@ -913,23 +901,6 @@ function selectBeach(key) {{
     </div>`;
   }}).join('');
 
-  const dl = document.getElementById('drinks-list');
-  dl.innerHTML = (b.drinks_nearby || []).map((d, i) => {{
-    const id = 'drink' + i;
-    const picked = fd.drink === id ? 'picked' : '';
-    const label = PRICE_LABEL[d.price] || d.price;
-    const mq = encodeURIComponent(d.name + ' ' + b.city + ' CA');
-    const showMap = d.name.toLowerCase().indexOf('byob') === -1 && d.name.toLowerCase().indexOf('stock up') === -1 && d.name.toLowerCase().indexOf('grab') === -1;
-    return `<div class="food-card drink-card ${{picked}}" data-id="${{id}}" onclick="pickDrink(this)">
-      <div class="food-top"><span class="food-name">${{d.name}}</span><span class="price-tag">${{label}}</span></div>
-      <div class="food-meta">${{d.type}} · ${{d.distance}}</div>
-      <div class="food-note">${{d.note}}</div>
-      ${{showMap ? `<a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank" onclick="event.stopPropagation()">&#x2197; open in maps</a>` : ''}}
-      <div class="pick-label">tap to choose</div>
-      <div class="picked-label">✓ this is the pick</div>
-    </div>`;
-  }}).join('');
-
   const sl = document.getElementById('spots-list');
   sl.innerHTML = (b.spots_nearby || []).map((s, i) => {{
     const id = 'spot' + i;
@@ -966,12 +937,6 @@ function toggleSpot(el) {{
   el.classList.toggle('done');
   const done = [...document.querySelectorAll('.spot-item.done')].map(e => e.dataset.id);
   saveBeach(currentBeach, 'spots', done);
-}}
-
-function pickDrink(el) {{
-  document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('picked'));
-  el.classList.add('picked');
-  saveBeach(currentBeach, 'drink', el.dataset.id);
 }}
 
 const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{{}}');

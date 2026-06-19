@@ -43,7 +43,7 @@ BEACHES = {
         "vibe": ["private", "quiet", "tucked away", "local secret", "no crowds"],
         "parking": "Free street parking at the dead end of 54th Place — quiet residential dead end, usually just a couple cars if any. No meters, no pay stations. Park and step right onto the beach.",
         "fire_pit": False,
-        "notes": "Quiet at the end of 54th Street. No lifeguards to bother, not normally overcrowded, no beach tournaments. Just the water and the sun. Most people don't even know this beach exists.",
+        "notes": "Quiet at the end of 54th Street. No lifeguards to bother, not normally overcrowded, no beach tournaments. Just the water and the sun. Most people don't even know this beach exists. Juneteenth falls on a Friday this year so expect a little more company than usual — but nothing like the main beaches. This one stays under the radar.",
         "food_nearby": [
             {"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."},
             {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."},
