@@ -33,6 +33,31 @@ BEACHES = {
         ],
         "budget_per_person": 15,
     },
+    "horny_corner": {
+        "name": "Horny Corner",
+        "city": "Long Beach",
+        "vibe": ["private", "quiet", "tucked away", "local secret", "no crowds"],
+        "parking": "Free street parking — dead end of 54th Pl, Long Beach 90803. Usually empty.",
+        "fire_pit": False,
+        "notes": "The quiet corner at the end of 54th Place. No lifeguards, no families with umbrellas, no volleyball tournaments. Just the water and whoever you came with. The beach thins out here and most people don't know it exists.",
+        "food_nearby": [
+            {"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."},
+            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."},
+            {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."},
+            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."},
+        ],
+        "spots_nearby": [
+            "Naples Island canals — 10min walk, walk the bridges at sunset, genuinely beautiful",
+            "Belmont Pier — 0.5mi north, good sunset view from the end",
+            "2nd Street strip — grab coffee or food without driving, walkable from the parking",
+        ],
+        "smoke_spots": [
+            "Right here — dead end of 54th, no foot traffic, sheltered",
+            "Walk south along the waterline — gets even more isolated past the last house",
+            "The bike path cutthrough at dusk — low visibility, low traffic",
+        ],
+        "budget_per_person": 15,
+    },
     "junipero": {
         "name": "Junipero Beach",
         "city": "Long Beach",

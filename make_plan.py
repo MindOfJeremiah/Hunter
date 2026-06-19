@@ -6,7 +6,7 @@ import sys, os, webbrowser, json
 from beach_day import BEACHES
 
 # Long Beach beaches shown first, rest after
-BEACH_ORDER = ["seal_beach", "belmont_shore", "junipero", "dockweiler", "el_matador", "zuma", "leo_carrillo", "manhattan", "venice"]
+BEACH_ORDER = ["horny_corner", "seal_beach", "belmont_shore", "junipero", "dockweiler", "el_matador", "zuma", "leo_carrillo", "manhattan", "venice"]
 
 def generate(default_key, for_name=None, note=None):
     name_display = for_name if for_name else "today"
@@ -20,7 +20,7 @@ def generate(default_key, for_name=None, note=None):
         b = BEACHES[key]
         fp = '<span class="bp-fire">🔥</span>' if b["fire_pit"] else ""
         vibes = " · ".join(b["vibe"][:2])
-        lb_tag = ' <span class="bp-local">local</span>' if key in ("seal_beach", "belmont_shore", "junipero") else ""
+        lb_tag = ' <span class="bp-local">local</span>' if key in ("horny_corner", "seal_beach", "belmont_shore", "junipero") else ""
         picker_cards += f"""
         <div class="bp-card" data-key="{key}" onclick="selectBeach('{key}')">
           <div class="bp-top">{fp}<span class="bp-name">{b['name']}</span>{lb_tag}</div>
