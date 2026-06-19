@@ -42,7 +42,7 @@ BEACHES = {
         "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.",
         "food_nearby": [
             {"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"},
-            {"name": "Lola's Mexican Cuisine", "type": "Mexican", "price": "$$", "distance": "2mi", "note": "4th Street corridor, legit food, good margaritas, not a tourist trap"},
+            {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard Mexican — more refined, good cocktails, worth it"},
             {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"},
         ],
         "spots_nearby": [
@@ -65,10 +65,10 @@ BEACHES = {
         "fire_pit": False,
         "notes": "Best of both worlds — actual beach plus a whole street of food and shops. 2nd Street is Long Beach's most walkable strip. Good for an all-day thing that flows from beach to dinner without driving.",
         "food_nearby": [
-            {"name": "Hole Mole", "type": "Mexican", "price": "$", "distance": "0.5mi", "note": "Long Beach classic. Mole, carnitas, real portions. Been there decades for a reason."},
-            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple, shawarma and hummus, different from the usual"},
-            {"name": "Potholder Cafe", "type": "Breakfast", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Line out the door on weekends — get there early or late"},
-            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good transition spot if the day rolls into evening — food, drinks, local crowd"},
+            {"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."},
+            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."},
+            {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.5mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."},
+            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."},
         ],
         "spots_nearby": [
             "Naples Island — rent a gondola or just walk the canals, genuinely beautiful",
