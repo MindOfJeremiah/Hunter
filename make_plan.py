@@ -465,10 +465,7 @@ def generate(default_key, for_name=None, note=None):
     }}
     .food-card:last-child {{ border-bottom: none; }}
     .food-card:active {{ background: #F5EEE4; }}
-    .food-card.picked {{
-      background: rgba(26,58,47,0.05);
-      border-left-color: var(--forest-mid);
-    }}
+    .food-card:hover {{ background: #F5EEE4; }}
 
     .food-top {{
       display: flex;
@@ -485,8 +482,6 @@ def generate(default_key, for_name=None, note=None):
       flex: 1;
       line-height: 1.2;
     }}
-    .food-card.picked .food-name {{ color: var(--forest); }}
-
     .price-tag {{
       font-size: 11px;
       color: var(--muted);
@@ -508,15 +503,12 @@ def generate(default_key, for_name=None, note=None):
       font-weight: 300;
     }}
 
-    .pick-label   {{ font-size:12px; color:#C8B8A8; margin-top:9px; font-style:italic; }}
-    .picked-label {{ font-size:12px; color:var(--forest-mid); font-style:italic; margin-top:9px; display:none; }}
-    .food-card.picked .pick-label   {{ display:none; }}
-    .food-card.picked .picked-label {{ display:block; }}
-
     /* Drink cards — same layout, gold picked border */
     .drink-card.picked {{ border-left-color: var(--gold); background: rgba(201,151,58,0.05); }}
     .drink-card.picked .food-name {{ color: #7A5A1A; }}
     .drink-card.picked .picked-label {{ color: #A07828; }}
+    .picked-label {{ font-size:12px; color:var(--forest-mid); font-style:italic; margin-top:9px; display:none; }}
+    .drink-card.picked .picked-label {{ display:block; }}
 
     /* Map link */
     .map-link {{
@@ -767,14 +759,12 @@ def generate(default_key, for_name=None, note=None):
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">bring this</div>
     <ul class="pack-list">
-      <li class="pack-item" data-id="sunscreen" onclick="togglePack(this)"><span class="check-box"></span><span>sunscreen</span></li>
       <li class="pack-item" data-id="towels"    onclick="togglePack(this)"><span class="check-box"></span><span>towels</span></li>
       <li class="pack-item" data-id="water"     onclick="togglePack(this)"><span class="check-box"></span><span>water bottles</span></li>
       <li class="pack-item" data-id="snacks"    onclick="togglePack(this)"><span class="check-box"></span><span>snacks</span></li>
       <li class="pack-item" data-id="speaker"   onclick="togglePack(this)"><span class="check-box"></span><span>speaker</span></li>
       <li class="pack-item" data-id="blanket"   onclick="togglePack(this)"><span class="check-box"></span><span>blanket</span></li>
       <li class="pack-item" data-id="charger"   onclick="togglePack(this)"><span class="check-box"></span><span>portable charger</span></li>
-      <li class="pack-item" data-id="cash"      onclick="togglePack(this)"><span class="check-box"></span><span>cash (for food)</span></li>
       <li class="pack-item" data-id="change"    onclick="togglePack(this)"><span class="check-box"></span><span>change of clothes</span></li>
       <li class="pack-item" id="pack-lighter" style="display:none" data-id="lighter" onclick="togglePack(this)"><span class="check-box"></span><span>lighter</span></li>
     </ul>
@@ -806,7 +796,7 @@ def generate(default_key, for_name=None, note=None):
       <span class="g-star" style="top:52%;left:50%;font-size:5px;animation-delay:-3s;animation-duration:6s;opacity:0.28;">✦</span>
       <div class="golden-inner">
         <div class="golden-script">golden hour</div>
-        <div class="golden-text">when the sun starts dropping, find somewhere quieter. just the two of you. you'll know when.</div>
+        <div class="golden-text">the light goes gold for a reason. find your quiet corner, let everything else go still. this is the hour that belongs to you.</div>
       </div>
     </div>
 
@@ -830,7 +820,7 @@ def generate(default_key, for_name=None, note=None):
 const BEACHES = {beaches_js};
 const DEFAULT = "{default_key}";
 const GLOBAL_KEY = "beach_day_global";
-const PRICE_LABEL = {{"$":"budget-friendly","$$":"mid","$$$":"splurge"}};
+const PRICE_LABEL = {{"$":"$","$$":"$$","$$$":"$$$"}};
 
 function saveGlobal(field, val) {{
   const d = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{{}}');
@@ -876,17 +866,12 @@ function selectBeach(key) {{
 
   const fl = document.getElementById('food-list');
   fl.innerHTML = b.food_nearby.map((f, i) => {{
-    const id = 'food' + i;
-    const picked = fd.food === id ? 'picked' : '';
-    const label = PRICE_LABEL[f.price] || f.price;
     const mq = encodeURIComponent(f.name + ' ' + b.city + ' CA');
-    return `<div class="food-card ${{picked}}" data-id="${{id}}" onclick="pickFood(this)">
-      <div class="food-top"><span class="food-name">${{f.name}}</span><span class="price-tag">${{label}}</span></div>
+    return `<div class="food-card">
+      <div class="food-top"><span class="food-name">${{f.name}}</span><span class="price-tag">${{f.price}}</span></div>
       <div class="food-meta">${{f.type}} · ${{f.distance}}</div>
       <div class="food-note">${{f.note}}</div>
-      <a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank" onclick="event.stopPropagation()">&#x2197; open in maps</a>
-      <div class="pick-label">tap to choose</div>
-      <div class="picked-label">✓ this is the pick</div>
+      <a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank">&#x2197; open in maps</a>
     </div>`;
   }}).join('');
 
@@ -943,12 +928,6 @@ function toggleSpot(el) {{
   el.classList.toggle('done');
   const done = [...document.querySelectorAll('.spot-item.done')].map(e => e.dataset.id);
   saveBeach(currentBeach, 'spots', done);
-}}
-
-function pickFood(el) {{
-  document.querySelectorAll('.food-card:not(.drink-card)').forEach(c => c.classList.remove('picked'));
-  el.classList.add('picked');
-  saveBeach(currentBeach, 'food', el.dataset.id);
 }}
 
 function pickDrink(el) {{
