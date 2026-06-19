@@ -1,4 +1,4 @@
-# beach_day.py — cross-references SoCal beaches with nearby food, spots, and budget info.
+# beach_day.py — cross-references SoCal beaches with nearby food, drinks, spots, and budget info.
 # Usage:
 #   python3 beach_day.py                  → lists all beaches
 #   python3 beach_day.py zuma             → full breakdown for Zuma
@@ -20,6 +20,10 @@ BEACHES = {
             {"name": "Crema Cafe", "type": "Coffee / breakfast", "price": "$", "distance": "0.1mi", "note": "Good spot to start the day, not a chain, local energy"},
             {"name": "Walt's Wharf", "type": "Seafood", "price": "$$$", "distance": "0.3mi", "note": "Splurge option — fresh fish, good atmosphere, worth it for a special day"},
             {"name": "Bogarts Coffee", "type": "Coffee / smoothies", "price": "$", "distance": "0.4mi", "note": "Chill, local, good acai bowls"},
+        ],
+        "drinks_nearby": [
+            {"name": "Seal Beach Brewing Co.", "type": "Craft brewery", "price": "$$", "distance": "0.3mi", "note": "Right on Main Street. Small batch brews, relaxed patio. Good way to end the beach part of the day."},
+            {"name": "Hennessey's Tavern", "type": "Bar", "price": "$$", "distance": "0.2mi", "note": "Classic Seal Beach bar on Main. Nothing fancy, cold drinks, friendly crowd."},
         ],
         "spots_nearby": [
             "Seal Beach Pier — one of the oldest wooden piers in CA, walk to the end at sunset",
@@ -46,6 +50,11 @@ BEACHES = {
             {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."},
             {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."},
         ],
+        "drinks_nearby": [
+            {"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.6mi", "note": "Long Beach's best tap list. 40+ drafts, real craft selection, good atmosphere on 2nd Street."},
+            {"name": "Beachwood Blendery", "type": "Sour beer bar", "price": "$$", "distance": "0.8mi", "note": "Barrel-aged sours and wild ales. Very different, very good. Standing room, local crowd."},
+            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good wine and local beers, no attitude. Already in the food list — but honestly better as a drink spot."},
+        ],
         "spots_nearby": [
             "Naples Island canals — 10min walk, walk the bridges at sunset, genuinely beautiful",
             "Belmont Pier — 0.5mi north, good sunset view from the end",
@@ -67,8 +76,13 @@ BEACHES = {
         "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.",
         "food_nearby": [
             {"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"},
-            {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard Mexican — more refined, good cocktails, worth it"},
+            {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard — more refined, good cocktails, worth it"},
             {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"},
+        ],
+        "drinks_nearby": [
+            {"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "1.5mi", "note": "Best tap list in Long Beach. Worth the short drive up 2nd Street."},
+            {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Food and drinks in one — solid pours alongside the ribs."},
+            {"name": "Panxa Cocina", "type": "Cocktail bar / Latin fusion", "price": "$$", "distance": "2mi", "note": "Good cocktails, refined vibe. Worth it if the day rolls into evening."},
         ],
         "spots_nearby": [
             "2nd Street / Belmont Shore — 10min walk north, shops and food strip",
@@ -95,6 +109,11 @@ BEACHES = {
             {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.5mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."},
             {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."},
         ],
+        "drinks_nearby": [
+            {"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.4mi", "note": "The 2nd Street anchor. 40+ craft taps, good energy, better-than-average bar food."},
+            {"name": "Ballast Point Long Beach", "type": "Craft brewery", "price": "$$", "distance": "0.5mi", "note": "Waterfront views from the patio, solid rotating taps. Good for a golden hour drink."},
+            {"name": "Beachwood Blendery", "type": "Sour / wild ales", "price": "$$", "distance": "0.6mi", "note": "Barrel-aged sours, standing room, local cult following. For something more interesting."},
+        ],
         "spots_nearby": [
             "Naples Island — rent a gondola or just walk the canals, genuinely beautiful",
             "Belmont Pier — sunset from the end of the pier is the move",
@@ -119,6 +138,10 @@ BEACHES = {
             {"name": "Reel Inn", "type": "Seafood / casual", "price": "$$", "distance": "2mi", "note": "Fish tacos on PCH, unpretentious"},
             {"name": "Vintage Grocers Malibu", "type": "Grab & go", "price": "$", "distance": "3mi", "note": "Good deli section, make your own beach snacks"},
         ],
+        "drinks_nearby": [
+            {"name": "Duke's Malibu", "type": "Beach bar / restaurant", "price": "$$$", "distance": "8mi south", "note": "Ocean-facing bar. Pricey but you're in Malibu — mai tais with a view. Go for drinks, not dinner."},
+            {"name": "Moonshadows Malibu", "type": "Bar / lounge", "price": "$$$", "distance": "10mi south on PCH", "note": "Oceanfront deck, good cocktails. Sunset timing is everything here."},
+        ],
         "spots_nearby": [
             "Point Dume State Preserve — cliff walk above the ocean, low foot traffic",
             "El Matador Beach — 10min north, rocky coves, feels hidden",
@@ -135,6 +158,10 @@ BEACHES = {
         "food_nearby": [
             {"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "3mi", "note": "Classic PCH spot, clam chowder, fish and chips, cash-friendly"},
             {"name": "Trancas Market", "type": "Deli / grocery", "price": "$", "distance": "1mi", "note": "Grab sandwiches and snacks before heading down"},
+        ],
+        "drinks_nearby": [
+            {"name": "Moonshadows Malibu", "type": "Bar / lounge", "price": "$$$", "distance": "4mi south", "note": "The closest good bar — oceanfront deck, solid cocktails, built for sunset."},
+            {"name": "Duke's Malibu", "type": "Beach bar", "price": "$$$", "distance": "3mi south", "note": "Mai tais, ocean views. Touristy but earned its reputation."},
         ],
         "spots_nearby": [
             "Zuma Beach — 10min south if you want more space to spread out",
@@ -153,6 +180,11 @@ BEACHES = {
             {"name": "Dulan's Soul Food Kitchen", "type": "Soul food", "price": "$", "distance": "4mi", "note": "Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution."},
             {"name": "Hilltop Coffee + Kitchen", "type": "Brunch / coffee", "price": "$$", "distance": "5mi", "note": "Inglewood spot with a vibe. Good for a late morning start before heading to the sand."},
             {"name": "Bludso's BBQ", "type": "BBQ", "price": "$$", "distance": "6mi", "note": "Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour."},
+        ],
+        "drinks_nearby": [
+            {"name": "BYOB — fire pit legal", "type": "Bring your own", "price": "$", "distance": "right here", "note": "Dockweiler allows alcohol in the designated fire pit areas. Grab a bottle on the way and make it part of the fire."},
+            {"name": "Naja's Place", "type": "Bar", "price": "$", "distance": "6mi south (Redondo)", "note": "70+ taps, no pretension, cash crowd. The real one if you want variety after the beach."},
+            {"name": "King Harbor Brewing", "type": "Craft brewery", "price": "$$", "distance": "7mi south (Redondo)", "note": "Waterfront patio, good selection. Better if you're ending the day with a drive south."},
         ],
         "smoke_spots": [
             "Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space",
@@ -174,9 +206,13 @@ BEACHES = {
         "notes": "Loud, chaotic, entertaining. Not for a quiet day but great if you want stimulation. Skate park, muscle beach, murals everywhere.",
         "food_nearby": [
             {"name": "Gjusta", "type": "Bakery / deli", "price": "$$", "distance": "0.5mi", "note": "Expensive but the sandwiches are legitimately great — split one"},
-            {"name": "Tacos Por Favor", "type": "Tacos", "price": "$", "distance": "1mi", "note": "Cheap, fast, legit Mexican — Santa Monica adjacent"},
-            {"name": "La Cabaña", "type": "Mexican", "price": "$", "distance": "1mi", "note": "Margaritas and chips, solid prices for the area"},
+            {"name": "Tacos Por Favor", "type": "Tacos", "price": "$", "distance": "1mi", "note": "Cheap, fast, legit — Santa Monica adjacent"},
             {"name": "Abbot Kinney food trucks", "type": "Various", "price": "$–$$", "distance": "0.3mi", "note": "Hit or miss by day, usually something good on weekends"},
+        ],
+        "drinks_nearby": [
+            {"name": "The Brig", "type": "Bar", "price": "$$", "distance": "0.3mi (Abbot Kinney)", "note": "Legit Venice bar. Low-lit, no gimmick, actual neighborhood crowd. Not a tourist spot."},
+            {"name": "Townhouse & Del Monte Speakeasy", "type": "Bar / speakeasy", "price": "$$", "distance": "0.5mi", "note": "Venice institution. Upstairs is a dive bar, downstairs is a speakeasy basement. Cheap drinks, right vibe."},
+            {"name": "West Washington Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.8mi", "note": "40+ taps, low-key, walkable from the beach strip."},
         ],
         "spots_nearby": [
             "Abbot Kinney Blvd — walkable, good window shopping and coffee",
@@ -196,6 +232,10 @@ BEACHES = {
             {"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "1mi", "note": "Right on PCH, motorcycles and beach people, good vibe"},
             {"name": "Trancas Market", "type": "Deli", "price": "$", "distance": "8mi", "note": "Stock up before you get there — nothing closer"},
         ],
+        "drinks_nearby": [
+            {"name": "Neptune's Net", "type": "Bar / seafood shack", "price": "$$", "distance": "1mi", "note": "Cold beer at the window. PCH biker crowd, good energy. More of a beer-with-chowder situation."},
+            {"name": "Stock up before you go", "type": "Tip", "price": "$", "distance": "Malibu on the way", "note": "There's genuinely not much out here. Grab wine or canned drinks in Malibu before heading up PCH."},
+        ],
         "spots_nearby": [
             "Nicholas Flat Trail — hike above the park with ocean views",
             "El Matador — 15min south for a different kind of cove beach",
@@ -213,6 +253,10 @@ BEACHES = {
             {"name": "Fishing with Dynamite", "type": "Seafood", "price": "$$$", "distance": "0.2mi", "note": "Splurge spot — skip if budget is tight"},
             {"name": "Uncle Bill's Pancake House", "type": "Breakfast", "price": "$", "distance": "0.3mi", "note": "Classic diner, good prices, go before the beach"},
             {"name": "Hermosa Beach taco trucks", "type": "Tacos", "price": "$", "distance": "1mi south", "note": "Walk or drive down to Hermosa for cheaper eats"},
+        ],
+        "drinks_nearby": [
+            {"name": "Manhattan Beach Brewing Co.", "type": "Craft brewery", "price": "$$", "distance": "0.4mi", "note": "Walking distance. Local brewery, patio seating, good rotating taps."},
+            {"name": "Strand House", "type": "Rooftop bar", "price": "$$$", "distance": "0.2mi", "note": "Pricey but the rooftop view of the strand at golden hour is worth one drink. Make it count."},
         ],
         "spots_nearby": [
             "The Strand — paved path from Manhattan to Redondo, good for a walk",
@@ -252,6 +296,11 @@ def print_beach(key):
     for f in b["food_nearby"]:
         print(f"    {f['price']} {f['name']} ({f['type']}) — {f['distance']}")
         print(f"       {f['note']}")
+
+    print(f"\n  DRINKS NEARBY")
+    for d in b.get("drinks_nearby", []):
+        print(f"    {d['price']} {d['name']} ({d['type']}) — {d['distance']}")
+        print(f"       {d['note']}")
 
     print(f"\n  SPOTS / THINGS NEARBY")
     for s in b["spots_nearby"]:
@@ -303,12 +352,11 @@ def main():
                 print_beach(key)
         return
 
-    key = args[0].lower().replace(" ", "_").replace("-", "_")
-    if key in BEACHES:
-        print_beach(key)
-    else:
-        print(f"\nBeach '{args[0]}' not in database. Known beaches:")
-        list_all()
+    key = args[0].lower().replace("-", "_")
+    if key not in BEACHES:
+        print(f"\nUnknown beach '{key}'. Available: {', '.join(BEACHES.keys())}\n")
+        return
+    print_beach(key)
 
 
 if __name__ == "__main__":

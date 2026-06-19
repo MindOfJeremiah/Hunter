@@ -513,6 +513,27 @@ def generate(default_key, for_name=None, note=None):
     .food-card.picked .pick-label   {{ display:none; }}
     .food-card.picked .picked-label {{ display:block; }}
 
+    /* Drink cards — same layout, gold picked border */
+    .drink-card.picked {{ border-left-color: var(--gold); background: rgba(201,151,58,0.05); }}
+    .drink-card.picked .food-name {{ color: #7A5A1A; }}
+    .drink-card.picked .picked-label {{ color: #A07828; }}
+
+    /* Map link */
+    .map-link {{
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--forest-light);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      margin-top: 10px;
+      border-bottom: 1px solid rgba(74,122,104,0.28);
+      padding-bottom: 1px;
+      -webkit-tap-highlight-color: transparent;
+    }}
+    .map-link:active {{ opacity: 0.55; }}
+
     /* Spot items */
     .spot-item {{
       display: flex;
@@ -763,6 +784,10 @@ def generate(default_key, for_name=None, note=None):
     <div class="food-list" id="food-list"></div>
 
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">sip something</div>
+    <div class="food-list" id="drinks-list"></div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">while you're there</div>
     <ul class="pack-list" id="spots-list"></ul>
 
@@ -854,11 +879,30 @@ function selectBeach(key) {{
     const id = 'food' + i;
     const picked = fd.food === id ? 'picked' : '';
     const label = PRICE_LABEL[f.price] || f.price;
+    const mq = encodeURIComponent(f.name + ' ' + b.city + ' CA');
     return `<div class="food-card ${{picked}}" data-id="${{id}}" onclick="pickFood(this)">
       <div class="food-top"><span class="food-name">${{f.name}}</span><span class="price-tag">${{label}}</span></div>
       <div class="food-meta">${{f.type}} · ${{f.distance}}</div>
       <div class="food-note">${{f.note}}</div>
-      <div class="pick-label">tap to choose this one</div>
+      <a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank" onclick="event.stopPropagation()">&#x2197; open in maps</a>
+      <div class="pick-label">tap to choose</div>
+      <div class="picked-label">✓ this is the pick</div>
+    </div>`;
+  }}).join('');
+
+  const dl = document.getElementById('drinks-list');
+  dl.innerHTML = (b.drinks_nearby || []).map((d, i) => {{
+    const id = 'drink' + i;
+    const picked = fd.drink === id ? 'picked' : '';
+    const label = PRICE_LABEL[d.price] || d.price;
+    const mq = encodeURIComponent(d.name + ' ' + b.city + ' CA');
+    const showMap = d.name.toLowerCase().indexOf('byob') === -1 && d.name.toLowerCase().indexOf('stock up') === -1 && d.name.toLowerCase().indexOf('grab') === -1;
+    return `<div class="food-card drink-card ${{picked}}" data-id="${{id}}" onclick="pickDrink(this)">
+      <div class="food-top"><span class="food-name">${{d.name}}</span><span class="price-tag">${{label}}</span></div>
+      <div class="food-meta">${{d.type}} · ${{d.distance}}</div>
+      <div class="food-note">${{d.note}}</div>
+      ${{showMap ? `<a class="map-link" href="https://maps.google.com/?q=${{mq}}" target="_blank" onclick="event.stopPropagation()">&#x2197; open in maps</a>` : ''}}
+      <div class="pick-label">tap to choose</div>
       <div class="picked-label">✓ this is the pick</div>
     </div>`;
   }}).join('');
@@ -877,8 +921,11 @@ function selectBeach(key) {{
     return `<li class="spot-item ${{done}}" data-id="${{id}}" onclick="toggleSpot(this)"><span class="check-box"></span><span>${{s}}</span></li>`;
   }}).join('');
 
+  const parkQ = encodeURIComponent(b.name + ' beach parking ' + b.city + ' CA');
   document.getElementById('parking-card').innerHTML =
-    b.parking + `<br><small style="color:#B8A888;margin-top:5px;display:block">~$${{b.budget_per_person}}/person estimated</small>`;
+    b.parking +
+    `<br><small style="color:#B8A888;margin-top:5px;display:block">~$${{b.budget_per_person}}/person estimated</small>` +
+    `<a class="map-link" href="https://maps.google.com/?q=${{parkQ}}" target="_blank" style="margin-top:12px;">&#x2197; get directions</a>`;
 
   const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{{}}');
   document.querySelectorAll('.pack-item').forEach(el => {{
@@ -899,9 +946,15 @@ function toggleSpot(el) {{
 }}
 
 function pickFood(el) {{
-  document.querySelectorAll('.food-card').forEach(c => c.classList.remove('picked'));
+  document.querySelectorAll('.food-card:not(.drink-card)').forEach(c => c.classList.remove('picked'));
   el.classList.add('picked');
   saveBeach(currentBeach, 'food', el.dataset.id);
+}}
+
+function pickDrink(el) {{
+  document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('picked'));
+  el.classList.add('picked');
+  saveBeach(currentBeach, 'drink', el.dataset.id);
 }}
 
 const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{{}}');
