@@ -8,6 +8,80 @@
 import sys
 
 BEACHES = {
+    "seal_beach": {
+        "name": "Seal Beach",
+        "city": "Seal Beach",
+        "vibe": ["small town", "quiet pier", "local", "not touristy", "chill"],
+        "parking": "Free street parking on Main St and side streets",
+        "fire_pit": False,
+        "notes": "15min from Long Beach and feels like a different world. Small town main street, old pier, way less crowded. Good for actually talking and being present. Nobody's performing here.",
+        "food_nearby": [
+            {"name": "Nick's Deli", "type": "Deli / sandwiches", "price": "$", "distance": "0.2mi", "note": "Cash only, been there forever, solid sandwiches"},
+            {"name": "Crema Cafe", "type": "Coffee / breakfast", "price": "$", "distance": "0.1mi", "note": "Good spot to start the day, not a chain, local energy"},
+            {"name": "Walt's Wharf", "type": "Seafood", "price": "$$$", "distance": "0.3mi", "note": "Splurge option — fresh fish, good atmosphere, worth it for a special day"},
+            {"name": "Bogarts Coffee", "type": "Coffee / smoothies", "price": "$", "distance": "0.4mi", "note": "Chill, local, good acai bowls"},
+        ],
+        "spots_nearby": [
+            "Seal Beach Pier — one of the oldest wooden piers in CA, walk to the end at sunset",
+            "Main Street — small shops, no chains, just walk it",
+            "Surfside Colony beach — gated but the stretch just south is quiet and barely anyone goes",
+        ],
+        "smoke_spots": [
+            "South end past the volleyball courts — beach gets empty fast",
+            "Under the pier on the south side — sheltered, low traffic",
+            "The jetty rocks at the north end — blocked from the main beach, good view",
+        ],
+        "budget_per_person": 15,
+    },
+    "junipero": {
+        "name": "Junipero Beach",
+        "city": "Long Beach",
+        "vibe": ["local", "low-key", "no tourists", "east side LB", "easy parking"],
+        "parking": "Free street parking on Junipero Ave — usually available",
+        "fire_pit": False,
+        "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.",
+        "food_nearby": [
+            {"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"},
+            {"name": "Lola's Mexican Cuisine", "type": "Mexican", "price": "$$", "distance": "2mi", "note": "4th Street corridor, legit food, good margaritas, not a tourist trap"},
+            {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"},
+        ],
+        "spots_nearby": [
+            "2nd Street / Belmont Shore — 10min walk north, shops and food strip",
+            "Naples Island canals — 15min walk, romantic canal neighborhood, weirdly beautiful",
+            "Alamitos Bay — calm water on the bay side, completely different vibe from the ocean",
+        ],
+        "smoke_spots": [
+            "Walk east past 54th Place — beach population drops off significantly",
+            "The bike path heading toward Belmont Shores at dusk — less foot traffic",
+            "Parking lot at the dead end of Junipero — usually empty, tucked away",
+        ],
+        "budget_per_person": 15,
+    },
+    "belmont_shore": {
+        "name": "Belmont Shore",
+        "city": "Long Beach",
+        "vibe": ["walkable", "2nd Street", "food and beach", "local scene", "day to night"],
+        "parking": "Street park off 2nd St side streets — free, just need to walk a couple blocks",
+        "fire_pit": False,
+        "notes": "Best of both worlds — actual beach plus a whole street of food and shops. 2nd Street is Long Beach's most walkable strip. Good for an all-day thing that flows from beach to dinner without driving.",
+        "food_nearby": [
+            {"name": "Hole Mole", "type": "Mexican", "price": "$", "distance": "0.5mi", "note": "Long Beach classic. Mole, carnitas, real portions. Been there decades for a reason."},
+            {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple, shawarma and hummus, different from the usual"},
+            {"name": "Potholder Cafe", "type": "Breakfast", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Line out the door on weekends — get there early or late"},
+            {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good transition spot if the day rolls into evening — food, drinks, local crowd"},
+        ],
+        "spots_nearby": [
+            "Naples Island — rent a gondola or just walk the canals, genuinely beautiful",
+            "Belmont Pier — sunset from the end of the pier is the move",
+            "2nd Street strip — window shop, grab coffee, no destination needed",
+        ],
+        "smoke_spots": [
+            "East end of the beach past the crowds toward Junipero — thins out after dark",
+            "Under the Belmont Pier south side — sheltered, usually clear at night",
+            "Granada Beach just north of the pier — quieter pocket, less traffic",
+        ],
+        "budget_per_person": 18,
+    },
     "zuma": {
         "name": "Zuma Beach",
         "city": "Malibu",
@@ -51,9 +125,14 @@ BEACHES = {
         "fire_pit": True,
         "notes": "One of the few LA beaches with public fire pits. Planes from LAX fly overhead — loud but lowkey cool at night. Less tourist energy.",
         "food_nearby": [
-            {"name": "In-N-Out (Lincoln Blvd)", "type": "Burgers", "price": "$", "distance": "2mi", "note": "Double-double is $6, you know what it is"},
-            {"name": "Tito's Tacos", "type": "Tacos", "price": "$", "distance": "3mi", "note": "Westside institution, crispy tacos, always a line but moves fast"},
-            {"name": "Whole Foods (Playa Vista)", "type": "Grab & go", "price": "$$", "distance": "2mi", "note": "Hot bar by weight if you want to sit down and eat real food"},
+            {"name": "Dulan's Soul Food Kitchen", "type": "Soul food", "price": "$", "distance": "4mi", "note": "Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution."},
+            {"name": "Hilltop Coffee + Kitchen", "type": "Brunch / coffee", "price": "$$", "distance": "5mi", "note": "Inglewood spot with a vibe. Good for a late morning start before heading to the sand."},
+            {"name": "Bludso's BBQ", "type": "BBQ", "price": "$$", "distance": "6mi", "note": "Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour."},
+        ],
+        "smoke_spots": [
+            "Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space",
+            "The grass strip between the lots and PCH — low foot traffic, good wind cover from the dunes",
+            "South end near the jetty — far from the families, good view",
         ],
         "spots_nearby": [
             "Ballona Wetlands — bike path along the water, calm",

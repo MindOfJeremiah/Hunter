@@ -400,6 +400,37 @@
       line-height: 1.5;
     }
 
+    /* Golden hour */
+    .golden {
+      background: linear-gradient(135deg, #3D0A1E, #7A1535, #C04060);
+      border-radius: 20px;
+      padding: 26px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .golden::before {
+      content: '✦';
+      position: absolute;
+      right: 20px; top: 16px;
+      font-size: 40px;
+      color: rgba(212,168,67,0.3);
+    }
+    .golden-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .golden-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.6;
+    }
+
     /* Notes */
     .notes-area {
       width: 100%;
@@ -509,31 +540,31 @@
     
         <div class="food-card" data-id="food0" onclick="pickFood(this)">
           <div class="food-top">
-            <span class="food-name">In-N-Out (Lincoln Blvd)</span>
+            <span class="food-name">Dulan's Soul Food Kitchen</span>
             <span class="price-tag">budget-friendly</span>
           </div>
-          <div class="food-meta">Burgers &middot; 2mi</div>
-          <div class="food-note">Double-double is $6, you know what it is</div>
+          <div class="food-meta">Soul food &middot; 4mi</div>
+          <div class="food-note">Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution.</div>
           <div class="pick-label">tap to pick this one</div>
           <div class="picked-label">&#10003; this is the pick</div>
         </div>
         <div class="food-card" data-id="food1" onclick="pickFood(this)">
           <div class="food-top">
-            <span class="food-name">Tito's Tacos</span>
-            <span class="price-tag">budget-friendly</span>
+            <span class="food-name">Hilltop Coffee + Kitchen</span>
+            <span class="price-tag">mid</span>
           </div>
-          <div class="food-meta">Tacos &middot; 3mi</div>
-          <div class="food-note">Westside institution, crispy tacos, always a line but moves fast</div>
+          <div class="food-meta">Brunch / coffee &middot; 5mi</div>
+          <div class="food-note">Inglewood spot with a vibe. Good for a late morning start before heading to the sand.</div>
           <div class="pick-label">tap to pick this one</div>
           <div class="picked-label">&#10003; this is the pick</div>
         </div>
         <div class="food-card" data-id="food2" onclick="pickFood(this)">
           <div class="food-top">
-            <span class="food-name">Whole Foods (Playa Vista)</span>
+            <span class="food-name">Bludso's BBQ</span>
             <span class="price-tag">mid</span>
           </div>
-          <div class="food-meta">Grab & go &middot; 2mi</div>
-          <div class="food-note">Hot bar by weight if you want to sit down and eat real food</div>
+          <div class="food-meta">BBQ &middot; 6mi</div>
+          <div class="food-note">Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour.</div>
           <div class="pick-label">tap to pick this one</div>
           <div class="picked-label">&#10003; this is the pick</div>
         </div>
@@ -543,12 +574,30 @@
   <div class="section">
     <div class="section-header">
       <span class="section-icon">🌸</span>
-      <span class="section-title">while you're there — check off as you go</span>
+      <span class="section-title">while you're there</span>
       <div class="section-line"></div>
     </div>
     <ul class="pack-list">
       <li class="spot-item" data-id="spot0" onclick="toggleSpot(this)"><span class="check-box"></span><span>Ballona Wetlands — bike path along the water, calm</span></li><li class="spot-item" data-id="spot1" onclick="toggleSpot(this)"><span class="check-box"></span><span>Manhattan Beach Pier — 10min south, cleaner vibe if you want to walk</span></li>
     </ul>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🌬️</span>
+      <span class="section-title">step away spots</span>
+      <div class="section-line"></div>
+    </div>
+    <ul class="pack-list"><li class="spot-item" data-id="smoke0" onclick="toggleSpot(this)"><span class="check-box"></span><span>Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space</span></li><li class="spot-item" data-id="smoke1" onclick="toggleSpot(this)"><span class="check-box"></span><span>The grass strip between the lots and PCH — low foot traffic, good wind cover from the dunes</span></li><li class="spot-item" data-id="smoke2" onclick="toggleSpot(this)"><span class="check-box"></span><span>South end near the jetty — far from the families, good view</span></li></ul>
+  </div>
+
+  <!-- Golden hour -->
+  <div class="section">
+    <div class="golden">
+      <div class="golden-label">golden hour</div>
+      <div class="golden-text">when the sun starts dropping, find somewhere quieter. just the two of you. you'll know when.</div>
+    </div>
   </div>
 
   <!-- Parking -->
