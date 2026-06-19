@@ -17,11 +17,11 @@
       --gold-light:  #E8C97A;
       --blush:       #F0C8D4;
       --rose:        #D95F7A;
-      --cream:       #F7F2E8;
-      --warm-white:  #FDFAF5;
+      --cream:       #F2EAD8;
+      --warm-white:  #FDF7EC;
       --ink:         #1C1410;
       --muted:       #9A8878;
-      --divider:     #E5D8C8;
+      --divider:     rgba(201,151,58,0.22);
     }
 
     body {
@@ -282,6 +282,17 @@
 
     /* ── MAIN CONTENT ── */
     .main-content { background: var(--cream); padding-bottom: 80px; }
+    .main-content::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg,
+        rgba(45,84,69,0.5) 0%,
+        rgba(201,151,58,0.8) 30%,
+        rgba(232,201,122,0.95) 50%,
+        rgba(201,151,58,0.8) 70%,
+        rgba(45,84,69,0.5) 100%);
+    }
 
     .content-inner {
       max-width: 600px;
@@ -294,10 +305,10 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin: 40px 0 26px;
+      margin: 44px 0 28px;
     }
-    .divider-line { flex:1; height:1px; background:var(--divider); }
-    .divider-mark { font-size:11px; color:var(--gold); opacity:0.7; }
+    .divider-line { flex:1; height:1px; background:rgba(201,151,58,0.22); }
+    .divider-mark { font-size:13px; color:var(--gold); opacity:0.88; }
 
     /* Section headings */
     .section-title {
@@ -306,14 +317,26 @@
       font-weight: 300;
       font-size: 30px;
       color: var(--forest);
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       line-height: 1.15;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(201,151,58,0.28);
+    }
+    .section-title::before {
+      content: '— ';
+      color: var(--gold);
+      font-style: normal;
+      font-size: 0.58em;
+      font-weight: 300;
+      opacity: 0.9;
+      vertical-align: 0.25em;
+      letter-spacing: 0.1em;
     }
 
     /* Intention / blurb */
     .intention {
-      background: var(--warm-white);
-      border-left: 3px solid var(--rose);
+      background: linear-gradient(135deg, #FDF6EC 0%, #F9EFE1 100%);
+      border-left: 3px solid var(--gold);
       padding: 26px 24px;
       margin-top: 38px;
     }
@@ -344,6 +367,7 @@
       gap: 16px;
       padding: 18px 22px;
       background: var(--forest);
+      border-left: 4px solid rgba(201,151,58,0.5);
     }
 
     .meetup-icon { font-size: 20px; flex-shrink: 0; }
@@ -386,12 +410,17 @@
       color: #4A3A2A;
       user-select: none;
       border: 1px solid transparent;
+      border-left: 3px solid rgba(201,151,58,0.22);
       border-radius: 2px;
     }
-
+    .pack-item:hover {
+      background: #FBF3E5;
+      border-left-color: rgba(201,151,58,0.52);
+    }
     .pack-item.checked {
       background: rgba(45,84,69,0.07);
-      border-color: rgba(45,84,69,0.13);
+      border-color: rgba(45,84,69,0.12);
+      border-left: 3px solid var(--forest-mid);
     }
     .pack-item.checked span:last-child {
       text-decoration: line-through;
@@ -419,7 +448,7 @@
 
     /* Food — editorial list */
     .food-list {
-      border: 1px solid var(--divider);
+      border: 1px solid rgba(201,151,58,0.22);
       border-radius: 2px;
       overflow: hidden;
     }
@@ -428,16 +457,13 @@
       background: var(--warm-white);
       padding: 18px 20px;
       cursor: pointer;
-      transition: background 0.18s;
-      border-left: 3px solid transparent;
-      border-bottom: 1px solid var(--divider);
+      transition: all 0.18s;
+      border-left: 3px solid rgba(201,151,58,0.25);
+      border-bottom: 1px solid rgba(201,151,58,0.15);
     }
     .food-card:last-child { border-bottom: none; }
-    .food-card:active { background: #F5EEE4; }
-    .food-card.picked {
-      background: rgba(26,58,47,0.05);
-      border-left-color: var(--forest-mid);
-    }
+    .food-card:active { background: #F7EEE0; border-left-color: rgba(201,151,58,0.55); }
+    .food-card:hover { background: #FBF3E5; border-left-color: rgba(201,151,58,0.55); }
 
     .food-top {
       display: flex;
@@ -454,8 +480,6 @@
       flex: 1;
       line-height: 1.2;
     }
-    .food-card.picked .food-name { color: var(--forest); }
-
     .price-tag {
       font-size: 11px;
       color: var(--muted);
@@ -477,10 +501,28 @@
       font-weight: 300;
     }
 
-    .pick-label   { font-size:12px; color:#C8B8A8; margin-top:9px; font-style:italic; }
+    /* Drink cards — same layout, gold picked border */
+    .drink-card.picked { border-left-color: var(--gold); background: rgba(201,151,58,0.05); }
+    .drink-card.picked .food-name { color: #7A5A1A; }
+    .drink-card.picked .picked-label { color: #A07828; }
     .picked-label { font-size:12px; color:var(--forest-mid); font-style:italic; margin-top:9px; display:none; }
-    .food-card.picked .pick-label   { display:none; }
-    .food-card.picked .picked-label { display:block; }
+    .drink-card.picked .picked-label { display:block; }
+
+    /* Map link */
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--forest-light);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      margin-top: 10px;
+      border-bottom: 1px solid rgba(74,122,104,0.28);
+      padding-bottom: 1px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .map-link:active { opacity: 0.55; }
 
     /* Spot items */
     .spot-item {
@@ -499,11 +541,20 @@
       line-height: 1.55;
       user-select: none;
       border: 1px solid transparent;
+      border-left: 3px solid rgba(201,151,58,0.22);
+    }
+    .spot-item:hover {
+      background: #FBF3E5;
+      border-left-color: rgba(201,151,58,0.52);
     }
     .spot-item.done {
       background: rgba(45,84,69,0.07);
-      border-color: rgba(45,84,69,0.13);
+      border-color: rgba(45,84,69,0.12);
+      border-left: 3px solid var(--forest-mid);
     }
+    #smoke-list .spot-item { border-left-color: rgba(45,84,69,0.25); }
+    #smoke-list .spot-item:hover { background: rgba(45,84,69,0.04); border-left-color: rgba(45,84,69,0.55); }
+    #smoke-list .spot-item.done { border-left: 3px solid var(--forest-mid); }
     .spot-item.done span:last-child {
       text-decoration: line-through;
       color: var(--muted);
@@ -515,7 +566,7 @@
     /* Parking */
     .parking-card {
       padding: 20px 22px;
-      background: var(--warm-white);
+      background: linear-gradient(135deg, #FDF6EC 0%, #F9EFE1 100%);
       border-left: 3px solid var(--gold);
       font-size: 14px;
       font-weight: 300;
@@ -591,7 +642,7 @@
       transition: border-color 0.2s;
       line-height: 1.78;
     }
-    .notes-area:focus { border-color: rgba(26,58,47,0.28); }
+    .notes-area:focus { border-color: rgba(201,151,58,0.42); }
     .notes-area::placeholder { color: #C4B4A4; }
 
     /* Footer */
@@ -775,14 +826,12 @@
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">bring this</div>
     <ul class="pack-list">
-      <li class="pack-item" data-id="sunscreen" onclick="togglePack(this)"><span class="check-box"></span><span>sunscreen</span></li>
       <li class="pack-item" data-id="towels"    onclick="togglePack(this)"><span class="check-box"></span><span>towels</span></li>
       <li class="pack-item" data-id="water"     onclick="togglePack(this)"><span class="check-box"></span><span>water bottles</span></li>
       <li class="pack-item" data-id="snacks"    onclick="togglePack(this)"><span class="check-box"></span><span>snacks</span></li>
       <li class="pack-item" data-id="speaker"   onclick="togglePack(this)"><span class="check-box"></span><span>speaker</span></li>
       <li class="pack-item" data-id="blanket"   onclick="togglePack(this)"><span class="check-box"></span><span>blanket</span></li>
       <li class="pack-item" data-id="charger"   onclick="togglePack(this)"><span class="check-box"></span><span>portable charger</span></li>
-      <li class="pack-item" data-id="cash"      onclick="togglePack(this)"><span class="check-box"></span><span>cash (for food)</span></li>
       <li class="pack-item" data-id="change"    onclick="togglePack(this)"><span class="check-box"></span><span>change of clothes</span></li>
       <li class="pack-item" id="pack-lighter" style="display:none" data-id="lighter" onclick="togglePack(this)"><span class="check-box"></span><span>lighter</span></li>
     </ul>
@@ -790,6 +839,10 @@
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">eat well</div>
     <div class="food-list" id="food-list"></div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">sip something</div>
+    <div class="food-list" id="drinks-list"></div>
 
     <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
     <div class="section-title">while you're there</div>
@@ -810,7 +863,7 @@
       <span class="g-star" style="top:52%;left:50%;font-size:5px;animation-delay:-3s;animation-duration:6s;opacity:0.28;">✦</span>
       <div class="golden-inner">
         <div class="golden-script">golden hour</div>
-        <div class="golden-text">when the sun starts dropping, find somewhere quieter. just the two of you. you'll know when.</div>
+        <div class="golden-text">the light goes gold for a reason. find your quiet corner, let everything else go still. this is the hour that belongs to you.</div>
       </div>
     </div>
 
@@ -831,10 +884,10 @@
 </div>
 
 <script>
-const BEACHES = {"horny_corner": {"name": "Horny Corner", "city": "Long Beach", "vibe": ["private", "quiet", "tucked away", "local secret", "no crowds"], "parking": "Free street parking — dead end of 54th Pl, Long Beach 90803. Usually empty.", "fire_pit": false, "notes": "The quiet corner at the end of 54th Place. No lifeguards, no families with umbrellas, no volleyball tournaments. Just the water and whoever you came with. The beach thins out here and most people don't know it exists.", "food_nearby": [{"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."}, {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."}, {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."}], "spots_nearby": ["Naples Island canals — 10min walk, walk the bridges at sunset, genuinely beautiful", "Belmont Pier — 0.5mi north, good sunset view from the end", "2nd Street strip — grab coffee or food without driving, walkable from the parking"], "smoke_spots": ["Right here — dead end of 54th, no foot traffic, sheltered", "Walk south along the waterline — gets even more isolated past the last house", "The bike path cutthrough at dusk — low visibility, low traffic"], "budget_per_person": 15}, "seal_beach": {"name": "Seal Beach", "city": "Seal Beach", "vibe": ["small town", "quiet pier", "local", "not touristy", "chill"], "parking": "Free street parking on Main St and side streets", "fire_pit": false, "notes": "15min from Long Beach and feels like a different world. Small town main street, old pier, way less crowded. Good for actually talking and being present. Nobody's performing here.", "food_nearby": [{"name": "Nick's Deli", "type": "Deli / sandwiches", "price": "$", "distance": "0.2mi", "note": "Cash only, been there forever, solid sandwiches"}, {"name": "Crema Cafe", "type": "Coffee / breakfast", "price": "$", "distance": "0.1mi", "note": "Good spot to start the day, not a chain, local energy"}, {"name": "Walt's Wharf", "type": "Seafood", "price": "$$$", "distance": "0.3mi", "note": "Splurge option — fresh fish, good atmosphere, worth it for a special day"}, {"name": "Bogarts Coffee", "type": "Coffee / smoothies", "price": "$", "distance": "0.4mi", "note": "Chill, local, good acai bowls"}], "spots_nearby": ["Seal Beach Pier — one of the oldest wooden piers in CA, walk to the end at sunset", "Main Street — small shops, no chains, just walk it", "Surfside Colony beach — gated but the stretch just south is quiet and barely anyone goes"], "smoke_spots": ["South end past the volleyball courts — beach gets empty fast", "Under the pier on the south side — sheltered, low traffic", "The jetty rocks at the north end — blocked from the main beach, good view"], "budget_per_person": 15}, "belmont_shore": {"name": "Belmont Shore", "city": "Long Beach", "vibe": ["walkable", "2nd Street", "food and beach", "local scene", "day to night"], "parking": "Street park off 2nd St side streets — free, just need to walk a couple blocks", "fire_pit": false, "notes": "Best of both worlds — actual beach plus a whole street of food and shops. 2nd Street is Long Beach's most walkable strip. Good for an all-day thing that flows from beach to dinner without driving.", "food_nearby": [{"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."}, {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."}, {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.5mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."}], "spots_nearby": ["Naples Island — rent a gondola or just walk the canals, genuinely beautiful", "Belmont Pier — sunset from the end of the pier is the move", "2nd Street strip — window shop, grab coffee, no destination needed"], "smoke_spots": ["East end of the beach past the crowds toward Junipero — thins out after dark", "Under the Belmont Pier south side — sheltered, usually clear at night", "Granada Beach just north of the pier — quieter pocket, less traffic"], "budget_per_person": 18}, "junipero": {"name": "Junipero Beach", "city": "Long Beach", "vibe": ["local", "low-key", "no tourists", "east side LB", "easy parking"], "parking": "Free street parking on Junipero Ave — usually available", "fire_pit": false, "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.", "food_nearby": [{"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"}, {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard Mexican — more refined, good cocktails, worth it"}, {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"}], "spots_nearby": ["2nd Street / Belmont Shore — 10min walk north, shops and food strip", "Naples Island canals — 15min walk, romantic canal neighborhood, weirdly beautiful", "Alamitos Bay — calm water on the bay side, completely different vibe from the ocean"], "smoke_spots": ["Walk east past 54th Place — beach population drops off significantly", "The bike path heading toward Belmont Shores at dusk — less foot traffic", "Parking lot at the dead end of Junipero — usually empty, tucked away"], "budget_per_person": 15}, "dockweiler": {"name": "Dockweiler State Beach", "city": "Playa del Rey", "vibe": ["fire pits", "local", "sunsets", "laid back", "night vibes"], "parking": "$5–12/day", "fire_pit": true, "notes": "One of the few LA beaches with public fire pits. Planes from LAX fly overhead — loud but lowkey cool at night. Less tourist energy.", "food_nearby": [{"name": "Dulan's Soul Food Kitchen", "type": "Soul food", "price": "$", "distance": "4mi", "note": "Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution."}, {"name": "Hilltop Coffee + Kitchen", "type": "Brunch / coffee", "price": "$$", "distance": "5mi", "note": "Inglewood spot with a vibe. Good for a late morning start before heading to the sand."}, {"name": "Bludso's BBQ", "type": "BBQ", "price": "$$", "distance": "6mi", "note": "Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour."}], "smoke_spots": ["Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space", "The grass strip between the lots and PCH — low foot traffic, good wind cover from the dunes", "South end near the jetty — far from the families, good view"], "spots_nearby": ["Ballona Wetlands — bike path along the water, calm", "Manhattan Beach Pier — 10min south, cleaner vibe if you want to walk"], "budget_per_person": 18}, "el_matador": {"name": "El Matador State Beach", "city": "Malibu", "vibe": ["hidden", "rocky", "scenic", "intimate", "less crowded"], "parking": "$8/day (small lot — get there early or it's full)", "fire_pit": false, "notes": "Sea caves, rock formations, feels like a secret. Hike down is short but steep. Worth it.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "3mi", "note": "Classic PCH spot, clam chowder, fish and chips, cash-friendly"}, {"name": "Trancas Market", "type": "Deli / grocery", "price": "$", "distance": "1mi", "note": "Grab sandwiches and snacks before heading down"}], "spots_nearby": ["Zuma Beach — 10min south if you want more space to spread out", "Leo Carrillo — 15min north, sea caves and tidepools"], "budget_per_person": 20}, "zuma": {"name": "Zuma Beach", "city": "Malibu", "vibe": ["wide open", "less crowded", "good waves", "chill"], "parking": "$3–8/day (lot)", "fire_pit": false, "notes": "One of the longest beaches in LA. Less touristy than Santa Monica. Good for just existing.", "food_nearby": [{"name": "Cholada Thai Beach Cuisine", "type": "Thai", "price": "$", "distance": "0.5mi", "note": "Cash only, tiny, worth it"}, {"name": "Reel Inn", "type": "Seafood / casual", "price": "$$", "distance": "2mi", "note": "Fish tacos on PCH, unpretentious"}, {"name": "Vintage Grocers Malibu", "type": "Grab & go", "price": "$", "distance": "3mi", "note": "Good deli section, make your own beach snacks"}], "spots_nearby": ["Point Dume State Preserve — cliff walk above the ocean, low foot traffic", "El Matador Beach — 10min north, rocky coves, feels hidden"], "budget_per_person": 25}, "leo_carrillo": {"name": "Leo Carrillo State Park", "city": "Malibu (north)", "vibe": ["sea caves", "tidepools", "camping", "nature", "remote feeling"], "parking": "$12/day", "fire_pit": false, "notes": "Sea caves you can actually walk into. Tidepools. Feels far from the city even though it's not. Good for an adventure day.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "1mi", "note": "Right on PCH, motorcycles and beach people, good vibe"}, {"name": "Trancas Market", "type": "Deli", "price": "$", "distance": "8mi", "note": "Stock up before you get there — nothing closer"}], "spots_nearby": ["Nicholas Flat Trail — hike above the park with ocean views", "El Matador — 15min south for a different kind of cove beach"], "budget_per_person": 20}, "manhattan": {"name": "Manhattan Beach", "city": "Manhattan Beach", "vibe": ["clean", "walkable", "pier", "mellow", "local feel"], "parking": "Street parking is free but competitive — aim for neighborhoods east of the strand", "fire_pit": false, "notes": "Quieter than Venice, cleaner than Santa Monica. Good pier. Nice for a walk and food combo.", "food_nearby": [{"name": "Fishing with Dynamite", "type": "Seafood", "price": "$$$", "distance": "0.2mi", "note": "Splurge spot — skip if budget is tight"}, {"name": "Uncle Bill's Pancake House", "type": "Breakfast", "price": "$", "distance": "0.3mi", "note": "Classic diner, good prices, go before the beach"}, {"name": "Hermosa Beach taco trucks", "type": "Tacos", "price": "$", "distance": "1mi south", "note": "Walk or drive down to Hermosa for cheaper eats"}], "spots_nearby": ["The Strand — paved path from Manhattan to Redondo, good for a walk", "Hermosa Beach — 1mi south, more relaxed, cheaper food scene"], "budget_per_person": 20}, "venice": {"name": "Venice Beach", "city": "Venice / LA", "vibe": ["energy", "people watching", "boardwalk", "weird and fun", "busy"], "parking": "$15–25/day (overpriced lots) — street parking in the neighborhoods saves money", "fire_pit": false, "notes": "Loud, chaotic, entertaining. Not for a quiet day but great if you want stimulation. Skate park, muscle beach, murals everywhere.", "food_nearby": [{"name": "Gjusta", "type": "Bakery / deli", "price": "$$", "distance": "0.5mi", "note": "Expensive but the sandwiches are legitimately great — split one"}, {"name": "Tacos Por Favor", "type": "Tacos", "price": "$", "distance": "1mi", "note": "Cheap, fast, legit Mexican — Santa Monica adjacent"}, {"name": "La Cabaña", "type": "Mexican", "price": "$", "distance": "1mi", "note": "Margaritas and chips, solid prices for the area"}, {"name": "Abbot Kinney food trucks", "type": "Various", "price": "$–$$", "distance": "0.3mi", "note": "Hit or miss by day, usually something good on weekends"}], "spots_nearby": ["Abbot Kinney Blvd — walkable, good window shopping and coffee", "Venice Canals — 5min walk from the beach, quiet residential canals, completely different vibe", "Santa Monica Pier — 2mi north, tourist-y but iconic"], "budget_per_person": 22}};
+const BEACHES = {"horny_corner": {"name": "Horny Corner", "city": "Long Beach", "vibe": ["private", "quiet", "tucked away", "local secret", "no crowds"], "parking": "Free street parking at the dead end of 54th Place — quiet residential dead end, usually just a couple cars if any. No meters, no pay stations. Park and step right onto the beach.", "fire_pit": false, "notes": "Quiet at the end of 54th Street. No lifeguards to bother, not normally overcrowded, no beach tournaments. Just the water and the sun. Most people don't even know this beach exists.", "food_nearby": [{"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "0.8mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."}, {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.7mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."}, {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.6mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."}], "drinks_nearby": [{"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.6mi", "note": "Long Beach's best tap list. 40+ drafts, real craft selection, good atmosphere on 2nd Street."}, {"name": "Beachwood Blendery", "type": "Sour beer bar", "price": "$$", "distance": "0.8mi", "note": "Barrel-aged sours and wild ales. Very different, very good. Standing room, local crowd."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.7mi", "note": "Good wine and local beers, no attitude. Already in the food list — but honestly better as a drink spot."}], "spots_nearby": ["Naples Island canals — 10min walk, walk the bridges at sunset, genuinely beautiful", "Belmont Pier — 0.5mi north, good sunset view from the end", "2nd Street strip — grab coffee or food without driving, walkable from the parking"], "smoke_spots": ["Right at the dead end — no foot traffic, no one coming through, just the water in front of you", "Walk south along the waterline until the houses end — completely alone out there with a full view of the horizon", "The jetty stones just past the water's edge — sit, settle in, and watch the water move"], "budget_per_person": 15}, "seal_beach": {"name": "Seal Beach", "city": "Seal Beach", "vibe": ["small town", "quiet pier", "local", "not touristy", "chill"], "parking": "Free street parking on Main St and side streets", "fire_pit": false, "notes": "15min from Long Beach and feels like a different world. Small town main street, old pier, way less crowded. Good for actually talking and being present. Nobody's performing here.", "food_nearby": [{"name": "Nick's Deli", "type": "Deli / sandwiches", "price": "$", "distance": "0.2mi", "note": "Cash only, been there forever, solid sandwiches"}, {"name": "Crema Cafe", "type": "Coffee / breakfast", "price": "$", "distance": "0.1mi", "note": "Good spot to start the day, not a chain, local energy"}, {"name": "Walt's Wharf", "type": "Seafood", "price": "$$$", "distance": "0.3mi", "note": "Splurge option — fresh fish, good atmosphere, worth it for a special day"}, {"name": "Bogarts Coffee", "type": "Coffee / smoothies", "price": "$", "distance": "0.4mi", "note": "Chill, local, good acai bowls"}], "drinks_nearby": [{"name": "Seal Beach Brewing Co.", "type": "Craft brewery", "price": "$$", "distance": "0.3mi", "note": "Right on Main Street. Small batch brews, relaxed patio. Good way to end the beach part of the day."}, {"name": "Hennessey's Tavern", "type": "Bar", "price": "$$", "distance": "0.2mi", "note": "Classic Seal Beach bar on Main. Nothing fancy, cold drinks, friendly crowd."}], "spots_nearby": ["Seal Beach Pier — one of the oldest wooden piers in CA, walk to the end at sunset", "Main Street — small shops, no chains, just walk it", "Surfside Colony beach — gated but the stretch just south is quiet and barely anyone goes"], "smoke_spots": ["South end past the volleyball courts — beach gets empty fast", "Under the pier on the south side — sheltered, low traffic", "The jetty rocks at the north end — blocked from the main beach, good view"], "budget_per_person": 15}, "belmont_shore": {"name": "Belmont Shore", "city": "Long Beach", "vibe": ["walkable", "2nd Street", "food and beach", "local scene", "day to night"], "parking": "Street park off 2nd St side streets — free, just need to walk a couple blocks", "fire_pit": false, "notes": "Best of both worlds — actual beach plus a whole street of food and shops. 2nd Street is Long Beach's most walkable strip. Good for an all-day thing that flows from beach to dinner without driving.", "food_nearby": [{"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."}, {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."}, {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.5mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."}], "drinks_nearby": [{"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.4mi", "note": "The 2nd Street anchor. 40+ craft taps, good energy, better-than-average bar food."}, {"name": "Ballast Point Long Beach", "type": "Craft brewery", "price": "$$", "distance": "0.5mi", "note": "Waterfront views from the patio, solid rotating taps. Good for a golden hour drink."}, {"name": "Beachwood Blendery", "type": "Sour / wild ales", "price": "$$", "distance": "0.6mi", "note": "Barrel-aged sours, standing room, local cult following. For something more interesting."}], "spots_nearby": ["Naples Island — rent a gondola or just walk the canals, genuinely beautiful", "Belmont Pier — sunset from the end of the pier is the move", "2nd Street strip — window shop, grab coffee, no destination needed"], "smoke_spots": ["East end of the beach past the crowds toward Junipero — thins out after dark", "Under the Belmont Pier south side — sheltered, usually clear at night", "Granada Beach just north of the pier — quieter pocket, less traffic"], "budget_per_person": 18}, "junipero": {"name": "Junipero Beach", "city": "Long Beach", "vibe": ["local", "low-key", "no tourists", "east side LB", "easy parking"], "parking": "Free street parking on Junipero Ave — usually available", "fire_pit": false, "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.", "food_nearby": [{"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"}, {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard — more refined, good cocktails, worth it"}, {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"}], "drinks_nearby": [{"name": "Congregation Ale House", "type": "Craft beer bar", "price": "$$", "distance": "1.5mi", "note": "Best tap list in Long Beach. Worth the short drive up 2nd Street."}, {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Food and drinks in one — solid pours alongside the ribs."}, {"name": "Panxa Cocina", "type": "Cocktail bar / Latin fusion", "price": "$$", "distance": "2mi", "note": "Good cocktails, refined vibe. Worth it if the day rolls into evening."}], "spots_nearby": ["2nd Street / Belmont Shore — 10min walk north, shops and food strip", "Naples Island canals — 15min walk, romantic canal neighborhood, weirdly beautiful", "Alamitos Bay — calm water on the bay side, completely different vibe from the ocean"], "smoke_spots": ["Walk east past 54th Place — beach population drops off significantly", "The bike path heading toward Belmont Shores at dusk — less foot traffic", "Parking lot at the dead end of Junipero — usually empty, tucked away"], "budget_per_person": 15}, "dockweiler": {"name": "Dockweiler State Beach", "city": "Playa del Rey", "vibe": ["fire pits", "local", "sunsets", "laid back", "night vibes"], "parking": "$5–12/day", "fire_pit": true, "notes": "One of the few LA beaches with public fire pits. Planes from LAX fly overhead — loud but lowkey cool at night. Less tourist energy.", "food_nearby": [{"name": "Dulan's Soul Food Kitchen", "type": "Soul food", "price": "$", "distance": "4mi", "note": "Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution."}, {"name": "Hilltop Coffee + Kitchen", "type": "Brunch / coffee", "price": "$$", "distance": "5mi", "note": "Inglewood spot with a vibe. Good for a late morning start before heading to the sand."}, {"name": "Bludso's BBQ", "type": "BBQ", "price": "$$", "distance": "6mi", "note": "Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour."}], "drinks_nearby": [{"name": "BYOB — fire pit legal", "type": "Bring your own", "price": "$", "distance": "right here", "note": "Dockweiler allows alcohol in the designated fire pit areas. Grab a bottle on the way and make it part of the fire."}, {"name": "Naja's Place", "type": "Bar", "price": "$", "distance": "6mi south (Redondo)", "note": "70+ taps, no pretension, cash crowd. The real one if you want variety after the beach."}, {"name": "King Harbor Brewing", "type": "Craft brewery", "price": "$$", "distance": "7mi south (Redondo)", "note": "Waterfront patio, good selection. Better if you're ending the day with a drive south."}], "smoke_spots": ["Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space", "The grass strip between the lots and PCH — low foot traffic, good wind cover from the dunes", "South end near the jetty — far from the families, good view"], "spots_nearby": ["Ballona Wetlands — bike path along the water, calm", "Manhattan Beach Pier — 10min south, cleaner vibe if you want to walk"], "budget_per_person": 18}, "el_matador": {"name": "El Matador State Beach", "city": "Malibu", "vibe": ["hidden", "rocky", "scenic", "intimate", "less crowded"], "parking": "$8/day (small lot — get there early or it's full)", "fire_pit": false, "notes": "Sea caves, rock formations, feels like a secret. Hike down is short but steep. Worth it.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "3mi", "note": "Classic PCH spot, clam chowder, fish and chips, cash-friendly"}, {"name": "Trancas Market", "type": "Deli / grocery", "price": "$", "distance": "1mi", "note": "Grab sandwiches and snacks before heading down"}], "drinks_nearby": [{"name": "Moonshadows Malibu", "type": "Bar / lounge", "price": "$$$", "distance": "4mi south", "note": "The closest good bar — oceanfront deck, solid cocktails, built for sunset."}, {"name": "Duke's Malibu", "type": "Beach bar", "price": "$$$", "distance": "3mi south", "note": "Mai tais, ocean views. Touristy but earned its reputation."}], "spots_nearby": ["Zuma Beach — 10min south if you want more space to spread out", "Leo Carrillo — 15min north, sea caves and tidepools"], "budget_per_person": 20}, "zuma": {"name": "Zuma Beach", "city": "Malibu", "vibe": ["wide open", "less crowded", "good waves", "chill"], "parking": "$3–8/day (lot)", "fire_pit": false, "notes": "One of the longest beaches in LA. Less touristy than Santa Monica. Good for just existing.", "food_nearby": [{"name": "Cholada Thai Beach Cuisine", "type": "Thai", "price": "$", "distance": "0.5mi", "note": "Cash only, tiny, worth it"}, {"name": "Reel Inn", "type": "Seafood / casual", "price": "$$", "distance": "2mi", "note": "Fish tacos on PCH, unpretentious"}, {"name": "Vintage Grocers Malibu", "type": "Grab & go", "price": "$", "distance": "3mi", "note": "Good deli section, make your own beach snacks"}], "drinks_nearby": [{"name": "Duke's Malibu", "type": "Beach bar / restaurant", "price": "$$$", "distance": "8mi south", "note": "Ocean-facing bar. Pricey but you're in Malibu — mai tais with a view. Go for drinks, not dinner."}, {"name": "Moonshadows Malibu", "type": "Bar / lounge", "price": "$$$", "distance": "10mi south on PCH", "note": "Oceanfront deck, good cocktails. Sunset timing is everything here."}], "spots_nearby": ["Point Dume State Preserve — cliff walk above the ocean, low foot traffic", "El Matador Beach — 10min north, rocky coves, feels hidden"], "budget_per_person": 25}, "leo_carrillo": {"name": "Leo Carrillo State Park", "city": "Malibu (north)", "vibe": ["sea caves", "tidepools", "camping", "nature", "remote feeling"], "parking": "$12/day", "fire_pit": false, "notes": "Sea caves you can actually walk into. Tidepools. Feels far from the city even though it's not. Good for an adventure day.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "1mi", "note": "Right on PCH, motorcycles and beach people, good vibe"}, {"name": "Trancas Market", "type": "Deli", "price": "$", "distance": "8mi", "note": "Stock up before you get there — nothing closer"}], "drinks_nearby": [{"name": "Neptune's Net", "type": "Bar / seafood shack", "price": "$$", "distance": "1mi", "note": "Cold beer at the window. PCH biker crowd, good energy. More of a beer-with-chowder situation."}, {"name": "Stock up before you go", "type": "Tip", "price": "$", "distance": "Malibu on the way", "note": "There's genuinely not much out here. Grab wine or canned drinks in Malibu before heading up PCH."}], "spots_nearby": ["Nicholas Flat Trail — hike above the park with ocean views", "El Matador — 15min south for a different kind of cove beach"], "budget_per_person": 20}, "manhattan": {"name": "Manhattan Beach", "city": "Manhattan Beach", "vibe": ["clean", "walkable", "pier", "mellow", "local feel"], "parking": "Street parking is free but competitive — aim for neighborhoods east of the strand", "fire_pit": false, "notes": "Quieter than Venice, cleaner than Santa Monica. Good pier. Nice for a walk and food combo.", "food_nearby": [{"name": "Fishing with Dynamite", "type": "Seafood", "price": "$$$", "distance": "0.2mi", "note": "Splurge spot — skip if budget is tight"}, {"name": "Uncle Bill's Pancake House", "type": "Breakfast", "price": "$", "distance": "0.3mi", "note": "Classic diner, good prices, go before the beach"}, {"name": "Hermosa Beach taco trucks", "type": "Tacos", "price": "$", "distance": "1mi south", "note": "Walk or drive down to Hermosa for cheaper eats"}], "drinks_nearby": [{"name": "Manhattan Beach Brewing Co.", "type": "Craft brewery", "price": "$$", "distance": "0.4mi", "note": "Walking distance. Local brewery, patio seating, good rotating taps."}, {"name": "Strand House", "type": "Rooftop bar", "price": "$$$", "distance": "0.2mi", "note": "Pricey but the rooftop view of the strand at golden hour is worth one drink. Make it count."}], "spots_nearby": ["The Strand — paved path from Manhattan to Redondo, good for a walk", "Hermosa Beach — 1mi south, more relaxed, cheaper food scene"], "budget_per_person": 20}, "venice": {"name": "Venice Beach", "city": "Venice / LA", "vibe": ["energy", "people watching", "boardwalk", "weird and fun", "busy"], "parking": "$15–25/day (overpriced lots) — street parking in the neighborhoods saves money", "fire_pit": false, "notes": "Loud, chaotic, entertaining. Not for a quiet day but great if you want stimulation. Skate park, muscle beach, murals everywhere.", "food_nearby": [{"name": "Gjusta", "type": "Bakery / deli", "price": "$$", "distance": "0.5mi", "note": "Expensive but the sandwiches are legitimately great — split one"}, {"name": "Tacos Por Favor", "type": "Tacos", "price": "$", "distance": "1mi", "note": "Cheap, fast, legit — Santa Monica adjacent"}, {"name": "Abbot Kinney food trucks", "type": "Various", "price": "$–$$", "distance": "0.3mi", "note": "Hit or miss by day, usually something good on weekends"}], "drinks_nearby": [{"name": "The Brig", "type": "Bar", "price": "$$", "distance": "0.3mi (Abbot Kinney)", "note": "Legit Venice bar. Low-lit, no gimmick, actual neighborhood crowd. Not a tourist spot."}, {"name": "Townhouse & Del Monte Speakeasy", "type": "Bar / speakeasy", "price": "$$", "distance": "0.5mi", "note": "Venice institution. Upstairs is a dive bar, downstairs is a speakeasy basement. Cheap drinks, right vibe."}, {"name": "West Washington Ale House", "type": "Craft beer bar", "price": "$$", "distance": "0.8mi", "note": "40+ taps, low-key, walkable from the beach strip."}], "spots_nearby": ["Abbot Kinney Blvd — walkable, good window shopping and coffee", "Venice Canals — 5min walk from the beach, quiet residential canals, completely different vibe", "Santa Monica Pier — 2mi north, tourist-y but iconic"], "budget_per_person": 22}};
 const DEFAULT = "horny_corner";
 const GLOBAL_KEY = "beach_day_global";
-const PRICE_LABEL = {"$":"budget-friendly","$$":"mid","$$$":"splurge"};
+const PRICE_LABEL = {"$":"$","$$":"$$","$$$":"$$$"};
 
 function saveGlobal(field, val) {
   const d = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
@@ -880,14 +933,28 @@ function selectBeach(key) {
 
   const fl = document.getElementById('food-list');
   fl.innerHTML = b.food_nearby.map((f, i) => {
-    const id = 'food' + i;
-    const picked = fd.food === id ? 'picked' : '';
-    const label = PRICE_LABEL[f.price] || f.price;
-    return `<div class="food-card ${picked}" data-id="${id}" onclick="pickFood(this)">
-      <div class="food-top"><span class="food-name">${f.name}</span><span class="price-tag">${label}</span></div>
+    const mq = encodeURIComponent(f.name + ' ' + b.city + ' CA');
+    return `<div class="food-card">
+      <div class="food-top"><span class="food-name">${f.name}</span><span class="price-tag">${f.price}</span></div>
       <div class="food-meta">${f.type} · ${f.distance}</div>
       <div class="food-note">${f.note}</div>
-      <div class="pick-label">tap to choose this one</div>
+      <a class="map-link" href="https://maps.google.com/?q=${mq}" target="_blank">&#x2197; open in maps</a>
+    </div>`;
+  }).join('');
+
+  const dl = document.getElementById('drinks-list');
+  dl.innerHTML = (b.drinks_nearby || []).map((d, i) => {
+    const id = 'drink' + i;
+    const picked = fd.drink === id ? 'picked' : '';
+    const label = PRICE_LABEL[d.price] || d.price;
+    const mq = encodeURIComponent(d.name + ' ' + b.city + ' CA');
+    const showMap = d.name.toLowerCase().indexOf('byob') === -1 && d.name.toLowerCase().indexOf('stock up') === -1 && d.name.toLowerCase().indexOf('grab') === -1;
+    return `<div class="food-card drink-card ${picked}" data-id="${id}" onclick="pickDrink(this)">
+      <div class="food-top"><span class="food-name">${d.name}</span><span class="price-tag">${label}</span></div>
+      <div class="food-meta">${d.type} · ${d.distance}</div>
+      <div class="food-note">${d.note}</div>
+      ${showMap ? `<a class="map-link" href="https://maps.google.com/?q=${mq}" target="_blank" onclick="event.stopPropagation()">&#x2197; open in maps</a>` : ''}
+      <div class="pick-label">tap to choose</div>
       <div class="picked-label">✓ this is the pick</div>
     </div>`;
   }).join('');
@@ -906,8 +973,11 @@ function selectBeach(key) {
     return `<li class="spot-item ${done}" data-id="${id}" onclick="toggleSpot(this)"><span class="check-box"></span><span>${s}</span></li>`;
   }).join('');
 
+  const parkQ = encodeURIComponent(b.name + ' beach parking ' + b.city + ' CA');
   document.getElementById('parking-card').innerHTML =
-    b.parking + `<br><small style="color:#B8A888;margin-top:5px;display:block">~$${b.budget_per_person}/person estimated</small>`;
+    b.parking +
+    `<br><small style="color:#B8A888;margin-top:5px;display:block">~$${b.budget_per_person}/person estimated</small>` +
+    `<a class="map-link" href="https://maps.google.com/?q=${parkQ}" target="_blank" style="margin-top:12px;">&#x2197; get directions</a>`;
 
   const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
   document.querySelectorAll('.pack-item').forEach(el => {
@@ -927,10 +997,10 @@ function toggleSpot(el) {
   saveBeach(currentBeach, 'spots', done);
 }
 
-function pickFood(el) {
-  document.querySelectorAll('.food-card').forEach(c => c.classList.remove('picked'));
+function pickDrink(el) {
+  document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('picked'));
   el.classList.add('picked');
-  saveBeach(currentBeach, 'food', el.dataset.id);
+  saveBeach(currentBeach, 'drink', el.dataset.id);
 }
 
 const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
