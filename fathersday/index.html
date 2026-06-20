@@ -290,7 +290,7 @@
 
     /* ── ATTENDANCE LIST ── */
     .list-section {
-      padding: 0 24px 80px;
+      padding: 0 24px 0;
       max-width: 480px;
       margin: 0 auto;
     }
@@ -389,6 +389,136 @@
       font-family: 'Cormorant Garant', serif;
     }
 
+    /* ── MESSAGE SECTION ── */
+    .msg-section {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .msg-intro {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .msg-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .msg-row .field { margin-bottom: 0; flex: 1; }
+
+    .msg-card-wrap {
+      background: linear-gradient(135deg, #FDF6EC 0%, #F9EFE1 100%);
+      border-left: 3px solid var(--amber);
+      border-radius: 2px;
+      padding: 20px 20px 16px;
+      margin-bottom: 14px;
+    }
+
+    .msg-card-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+
+    .msg-body-area {
+      width: 100%;
+      min-height: 150px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(201,136,64,0.2);
+      border-radius: 2px;
+      padding: 16px 16px;
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .msg-body-area:focus { border-color: rgba(201,136,64,0.48); }
+    .msg-body-area::placeholder { color: #C4A880; }
+
+    .msg-sign {
+      margin-top: 12px;
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .msg-sign span { color: var(--ink); }
+
+    /* Email reveal */
+    .email-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 14px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.3s;
+      opacity: 0;
+    }
+    .email-row.open { max-height: 80px; opacity: 1; }
+    .email-row .field { flex: 1; margin-bottom: 0; }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-share {
+      flex: 1;
+      padding: 17px;
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-share:active { background: #B85A22; transform: scale(0.98); }
+
+    .btn-email {
+      flex: 1;
+      padding: 17px;
+      background: transparent;
+      color: var(--green);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(26,58,47,0.35);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-email:active { background: rgba(26,58,47,0.06); transform: scale(0.98); }
+    .btn-email.armed {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+    .btn-email.armed:active { background: #122B20; }
+
     /* ── FOOTER ── */
     .footer {
       text-align: center;
@@ -486,7 +616,46 @@
   <div class="names-list" id="names-list"></div>
 </div>
 
-<div class="footer">made with love · father's day 2026</div>
+<!-- MESSAGE SECTION -->
+<div class="msg-section">
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-mark">✦</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="section-title">send a message</div>
+  <p class="msg-intro">write something real to your dad, your stepdad, your uncle, your grandfather — whoever shows up like a father. it's juneteenth weekend. they deserve to hear it.</p>
+
+  <div class="msg-row">
+    <div class="field">
+      <input id="msg-to-name" type="text" placeholder="to (their name)" autocomplete="off">
+    </div>
+    <div class="field">
+      <input id="msg-from-name" type="text" placeholder="from (your name)" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="msg-card-wrap">
+    <div class="msg-card-label">your message</div>
+    <textarea id="msg-body" class="msg-body-area" placeholder="write from the heart..."></textarea>
+    <div class="msg-sign">— <span id="msg-sign-name">you</span></div>
+  </div>
+
+  <!-- Email row — slides open when they tap "send by email" -->
+  <div class="email-row" id="email-row">
+    <div class="field">
+      <input id="msg-to-email" type="email" placeholder="their email address" autocomplete="off" inputmode="email">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-share" id="btn-share" onclick="doShare()">share →</button>
+    <button class="btn-email" id="btn-email" onclick="doEmail()">send by email</button>
+  </div>
+</div>
+
+<div class="footer">made with love · juneteenth weekend · father's day 2026</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -616,13 +785,105 @@ function pop(el) {
   }
 }
 
-// Enter key submits
+// Enter key submits sign-in
 document.getElementById('name-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('msg-input').focus();
 });
 document.getElementById('msg-input').addEventListener('keydown', e => {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) signIn();
 });
+
+// Pre-fill "from" in message section when sign-in name is typed
+document.getElementById('name-input').addEventListener('input', e => {
+  const v = e.target.value.trim();
+  const mf = document.getElementById('msg-from-name');
+  if (!mf._touched) mf.value = v;
+  document.getElementById('msg-sign-name').textContent = v || 'you';
+});
+document.getElementById('msg-from-name').addEventListener('input', e => {
+  e.target._touched = true;
+  document.getElementById('msg-sign-name').textContent = e.target.value.trim() || 'you';
+});
+
+// ── MESSAGE SECTION ──────────────────────────────────────────
+let emailArmed = false; // true once they've tapped "send by email" and email row is open
+
+function getMsgData() {
+  return {
+    toName:   document.getElementById('msg-to-name').value.trim(),
+    fromName: document.getElementById('msg-from-name').value.trim(),
+    body:     document.getElementById('msg-body').value.trim(),
+    toEmail:  document.getElementById('msg-to-email').value.trim(),
+  };
+}
+
+function buildSubject(toName) {
+  return toName
+    ? `happy father's day, ${toName}`
+    : "happy father's day";
+}
+
+function buildBody(d) {
+  return d.body + (d.fromName ? `\n\n— ${d.fromName}` : '');
+}
+
+// Share button — uses Web Share API if available, else falls back to email
+async function doShare() {
+  const d = getMsgData();
+  if (!d.body) { document.getElementById('msg-body').focus(); return; }
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: buildSubject(d.toName),
+        text: buildBody(d),
+      });
+      showToast('message sent 🖤');
+      pop(document.getElementById('btn-share'));
+    } catch(e) {
+      // user cancelled — do nothing
+    }
+  } else {
+    // No Web Share API — fall back to opening email
+    triggerEmail(d);
+  }
+}
+
+// Email button — first tap reveals email field, second tap (armed) sends
+function doEmail() {
+  const d = getMsgData();
+  if (!d.body) { document.getElementById('msg-body').focus(); return; }
+
+  const row = document.getElementById('email-row');
+  const btn = document.getElementById('btn-email');
+
+  if (!emailArmed) {
+    // First tap: reveal email input
+    row.classList.add('open');
+    emailArmed = true;
+    btn.classList.add('armed');
+    btn.textContent = 'send →';
+    setTimeout(() => document.getElementById('msg-to-email').focus(), 350);
+    return;
+  }
+
+  // Second tap: actually send
+  triggerEmail(d);
+}
+
+function triggerEmail(d) {
+  if (!d.body) return;
+  const subject = encodeURIComponent(buildSubject(d.toName));
+  const body    = encodeURIComponent(buildBody(d));
+  const mailto  = `mailto:${d.toEmail}?subject=${subject}&body=${body}`;
+  window.location.href = mailto;
+  showToast('opening email app 🖤');
+}
+
+// Hide share button if Web Share not supported (desktop fallback)
+if (!navigator.share) {
+  document.getElementById('btn-share').style.display = 'none';
+}
 
 // Init
 renderList();
