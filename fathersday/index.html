@@ -677,7 +677,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const STORE = 'fathersday_2026';
+const DB = 'https://fathersday-a71a3-default-rtdb.firebaseio.com';
 
 // ── TYPEWRITER ──────────────────────────────────────────────
 const MSG = "hey family — who's here today?\ntap your name in below. 🖤";
@@ -704,33 +704,45 @@ function startTyping() {
 
 setTimeout(startTyping, 900);
 
+// ── FIREBASE ─────────────────────────────────────────────────
+async function dbLoad() {
+  try {
+    const res  = await fetch(`${DB}/attendance.json`);
+    const data = await res.json();
+    if (!data) return [];
+    return Object.values(data).sort((a, b) => new Date(b.time) - new Date(a.time));
+  } catch { return []; }
+}
+
+async function dbSave(entry) {
+  await fetch(`${DB}/attendance.json`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(entry),
+  });
+}
+
 // ── SIGN IN ─────────────────────────────────────────────────
-function signIn() {
+async function signIn() {
   const nameEl = document.getElementById('name-input');
   const msgEl  = document.getElementById('msg-input');
   const name   = nameEl.value.trim();
   if (!name) { nameEl.focus(); return; }
 
-  const entry = {
-    name,
-    msg: msgEl.value.trim(),
-    time: new Date().toISOString(),
-  };
+  const btn = document.querySelector('.btn-signin');
+  btn.textContent = 'saving...';
+  btn.disabled = true;
 
-  const all = load();
-  all.unshift(entry);
-  save(all);
+  const entry = { name, msg: msgEl.value.trim(), time: new Date().toISOString() };
+  await dbSave(entry);
 
   nameEl.value = '';
   msgEl.value  = '';
 
-  renderList();
+  await renderList();
   showToast(`got you, ${name} 🖤`);
-
-  const btn = document.querySelector('.btn-signin');
   pop(btn);
   btn.textContent = "you're in ✓";
-  btn.disabled = true;
   setTimeout(() => { btn.textContent = "i'm here →"; btn.disabled = false; }, 2400);
 
   setTimeout(() => {
@@ -738,17 +750,9 @@ function signIn() {
   }, 600);
 }
 
-// ── STORE ────────────────────────────────────────────────────
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; }
-}
-function save(data) {
-  localStorage.setItem(STORE, JSON.stringify(data));
-}
-
 // ── RENDER LIST ──────────────────────────────────────────────
-function renderList() {
-  const all  = load();
+async function renderList() {
+  const all  = await dbLoad();
   const wrap = document.getElementById('names-list');
   const chip = document.getElementById('count-chip');
 
@@ -838,9 +842,7 @@ function getMsgData() {
 }
 
 function buildSubject(toName) {
-  return toName
-    ? `happy father's day, ${toName}`
-    : "happy father's day";
+  return toName ? `happy father's day, ${toName}` : "happy father's day";
 }
 
 function buildBody(d) {
@@ -850,8 +852,8 @@ function buildBody(d) {
 // Text button — opens Messages/iMessage with number + message pre-filled
 function doSend() {
   const d = getMsgData();
-  if (!d.body) { showToast('write your message first ✏️'); document.getElementById('msg-body').focus(); return; }
-  if (!d.toPhone) { showToast('add their phone number'); document.getElementById('msg-to-phone').focus(); return; }
+  if (!d.body)    { showToast('write your message first ✏️'); document.getElementById('msg-body').focus();    return; }
+  if (!d.toPhone) { showToast('add their phone number');      document.getElementById('msg-to-phone').focus(); return; }
 
   const text  = buildBody(d);
   const phone = d.toPhone.replace(/\s/g, '');
@@ -879,8 +881,9 @@ async function doCopy() {
   pop(document.getElementById('btn-copy'));
 }
 
-// Init
+// Init + live poll
 renderList();
+setInterval(renderList, 6000);
 </script>
 </body>
 </html>
