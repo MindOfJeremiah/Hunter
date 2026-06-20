@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>father's day · who's here?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Sacramento&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:   #120B06;
+      --amber:  #C98840;
+      --orange: #D4692A;
+      --cream:  #FAF3E8;
+      --warm:   #FDF8F0;
+      --ink:    #1A0D06;
+      --muted:  #9A7A5A;
+      --green:  #1A3A2F;
+      --divider: rgba(201,136,64,0.22);
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 32px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(201,136,64,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 35% at 10% 10%,  rgba(212,105,42,0.14) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 90% 5%,   rgba(201,136,64,0.1) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    /* ── CHARACTER SVG ── */
+    .char-wrap {
+      margin: 0 auto 32px;
+      width: 90px;
+    }
+
+    #char-svg { width: 100%; height: auto; }
+
+    .wave-arm {
+      transform-origin: 65px 52px;
+      animation: wave 0.7s ease-in-out infinite alternate;
+    }
+    @keyframes wave {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-38deg); }
+    }
+
+    /* Subtle body bounce */
+    .char-body-group {
+      animation: float 2.8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+
+    /* ── TYPING ── */
+    .typing-wrap {
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(201,136,64,0.7);
+      margin-bottom: 16px;
+    }
+
+    .typing-text {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 6vw, 32px);
+      color: rgba(255,255,255,0.88);
+      line-height: 1.55;
+      max-width: 340px;
+    }
+
+    .cursor {
+      display: inline-block;
+      color: var(--amber);
+      font-size: 1em;
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+      vertical-align: baseline;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.6s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+    }
+    .scroll-cue.show { opacity: 1; }
+    .scroll-cue span {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+    }
+    .scroll-cue::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: floatdown 2.2s ease-in-out infinite;
+    }
+    @keyframes floatdown {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(7px); }
+    }
+
+    /* ── SIGN IN SECTION ── */
+    .signin {
+      background: var(--warm);
+      padding: 52px 24px 52px;
+      position: relative;
+    }
+
+    .signin::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg,
+        rgba(26,58,47,0.5) 0%,
+        rgba(201,136,64,0.8) 30%,
+        rgba(232,201,122,0.95) 50%,
+        rgba(201,136,64,0.8) 70%,
+        rgba(26,58,47,0.5) 100%);
+      position: absolute;
+      top: 0; left: 0; right: 0;
+    }
+
+    .signin-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 34px;
+      color: var(--green);
+      margin-bottom: 28px;
+      line-height: 1.15;
+    }
+    .section-title::before {
+      content: '— ';
+      color: var(--amber);
+      font-style: normal;
+      font-size: 0.58em;
+      opacity: 0.9;
+      vertical-align: 0.25em;
+      letter-spacing: 0.1em;
+    }
+
+    .field { margin-bottom: 14px; }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 16px 18px;
+      background: var(--cream);
+      border: 1px solid rgba(201,136,64,0.28);
+      border-left: 3px solid rgba(201,136,64,0.35);
+      border-radius: 2px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(201,136,64,0.55);
+      border-left-color: var(--amber);
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: #C4A880; }
+    .field textarea {
+      resize: none;
+      min-height: 88px;
+      line-height: 1.68;
+    }
+
+    .btn-signin {
+      width: 100%;
+      padding: 18px;
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.18s;
+      margin-top: 4px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-signin:active { background: #B85A22; transform: scale(0.98); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: var(--green);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 2px;
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 20px;
+      font-weight: 300;
+      z-index: 9999;
+      transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+      max-width: 90vw;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── CONFETTI ── */
+    .cdot {
+      position: fixed;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      animation: cfly 0.9s ease-out forwards;
+      pointer-events: none;
+      z-index: 9998;
+    }
+    @keyframes cfly {
+      to { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+    }
+
+    /* ── ATTENDANCE LIST ── */
+    .list-section {
+      padding: 0 24px 80px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 44px 0 28px;
+    }
+    .divider-line { flex: 1; height: 1px; background: rgba(201,136,64,0.22); }
+    .divider-mark { font-size: 13px; color: var(--amber); opacity: 0.88; }
+
+    .list-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .list-title {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 30px;
+      color: var(--green);
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(201,136,64,0.28);
+      flex: 1;
+    }
+    .list-title::before {
+      content: '— ';
+      color: var(--amber);
+      font-style: normal;
+      font-size: 0.58em;
+      opacity: 0.9;
+      vertical-align: 0.25em;
+    }
+
+    .count-chip {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      background: rgba(201,136,64,0.12);
+      color: #7A5C18;
+      border: 1px solid rgba(201,136,64,0.28);
+      white-space: nowrap;
+    }
+
+    .names-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .name-card {
+      background: var(--warm);
+      padding: 16px 20px;
+      border-left: 3px solid rgba(201,136,64,0.28);
+      border-radius: 2px;
+      animation: cardIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .name-card-name {
+      font-family: 'Cormorant Garant', serif;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .name-card-msg {
+      font-size: 13px;
+      color: #6A5040;
+      line-height: 1.55;
+      font-weight: 300;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    .name-card-time {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      font-family: 'Cormorant Garant', serif;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 12px 20px 40px;
+      color: #B8A080;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">✦ father's day · june 21 ✦</div>
+
+    <!-- Waving dad character -->
+    <div class="char-wrap">
+      <svg id="char-svg" viewBox="0 0 100 125" xmlns="http://www.w3.org/2000/svg">
+        <g class="char-body-group">
+          <!-- Head -->
+          <circle cx="50" cy="21" r="17" fill="#C98840"/>
+          <!-- Eyes -->
+          <circle cx="43.5" cy="18.5" r="2.3" fill="#1A0D06"/>
+          <circle cx="56.5" cy="18.5" r="2.3" fill="#1A0D06"/>
+          <!-- Smile -->
+          <path d="M 42 25.5 Q 50 31.5 58 25.5" stroke="#1A0D06" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Neck -->
+          <rect x="44" y="36" width="12" height="8" rx="4" fill="#C98840"/>
+          <!-- Shirt body -->
+          <rect x="33" y="43" width="34" height="33" rx="9" fill="#1A3A2F"/>
+          <!-- Collar V -->
+          <path d="M 44 44 L 50 54 L 56 44" stroke="#FAF3E8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Tie -->
+          <path d="M 50 46 L 47.5 54 L 50 63 L 52.5 54 Z" fill="#D4692A"/>
+          <!-- Left arm (relaxed down) -->
+          <line x1="33" y1="52" x2="17" y2="70" stroke="#C98840" stroke-width="9" stroke-linecap="round"/>
+          <!-- Right arm (waving) -->
+          <g class="wave-arm">
+            <line x1="67" y1="52" x2="83" y2="34" stroke="#C98840" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="85" cy="32" r="7" fill="#C98840"/>
+          </g>
+          <!-- Pants left -->
+          <rect x="34" y="74" width="14" height="30" rx="5" fill="#2A3C5A"/>
+          <!-- Pants right -->
+          <rect x="52" y="74" width="14" height="30" rx="5" fill="#2A3C5A"/>
+          <!-- Shoes -->
+          <ellipse cx="39" cy="105" rx="10" ry="5" fill="#120B06"/>
+          <ellipse cx="61" cy="105" rx="10" ry="5" fill="#120B06"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Typing message -->
+    <div class="typing-wrap">
+      <div class="typing-text"><span id="typing-text"></span><span class="cursor" id="cursor">|</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" id="scroll-cue">
+    <span>sign in below</span>
+  </div>
+</div>
+
+<!-- SIGN IN -->
+<div class="signin">
+  <div class="signin-inner">
+    <div class="section-title">who are you?</div>
+    <div class="field">
+      <input id="name-input" type="text" placeholder="your name" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="field">
+      <textarea id="msg-input" placeholder="say something (optional)..." autocorrect="off"></textarea>
+    </div>
+    <button class="btn-signin" onclick="signIn()">i'm here →</button>
+  </div>
+</div>
+
+<!-- ATTENDANCE LIST -->
+<div class="list-section">
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-mark">✦</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="list-header">
+    <span class="list-title">who's here</span>
+    <span class="count-chip" id="count-chip">0 here</span>
+  </div>
+
+  <div class="names-list" id="names-list"></div>
+</div>
+
+<div class="footer">made with love · father's day 2026</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const STORE = 'fathersday_2026';
+
+// ── TYPEWRITER ──────────────────────────────────────────────
+const MSG = "hey family — who's here today?\ntap your name in below. 🖤";
+
+function startTyping() {
+  const el = document.getElementById('typing-text');
+  const cursor = document.getElementById('cursor');
+  let i = 0;
+  el.textContent = '';
+
+  const tick = setInterval(() => {
+    const ch = MSG[i];
+    if (ch === '\n') {
+      el.innerHTML += '<br>';
+    } else {
+      el.textContent += ch;
+      // Re-append cursor (text node strips it)
+    }
+    i++;
+    if (i >= MSG.length) {
+      clearInterval(tick);
+      setTimeout(() => {
+        cursor.style.display = 'none';
+        document.getElementById('scroll-cue').classList.add('show');
+      }, 800);
+    }
+  }, 52);
+}
+
+setTimeout(startTyping, 900);
+
+// ── SIGN IN ─────────────────────────────────────────────────
+function signIn() {
+  const nameEl = document.getElementById('name-input');
+  const msgEl  = document.getElementById('msg-input');
+  const name   = nameEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+
+  const entry = {
+    name,
+    msg: msgEl.value.trim(),
+    time: new Date().toISOString(),
+  };
+
+  const all = load();
+  all.unshift(entry);
+  save(all);
+
+  nameEl.value = '';
+  msgEl.value  = '';
+
+  renderList();
+  showToast(`got you, ${name} 🖤`);
+  pop(document.querySelector('.btn-signin'));
+
+  // Scroll to list
+  setTimeout(() => {
+    document.getElementById('names-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 400);
+}
+
+// ── STORE ────────────────────────────────────────────────────
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; }
+}
+function save(data) {
+  localStorage.setItem(STORE, JSON.stringify(data));
+}
+
+// ── RENDER LIST ──────────────────────────────────────────────
+function renderList() {
+  const all  = load();
+  const wrap = document.getElementById('names-list');
+  const chip = document.getElementById('count-chip');
+
+  chip.textContent = all.length === 1 ? '1 here' : `${all.length} here`;
+
+  if (all.length === 0) {
+    wrap.innerHTML = '<div class="empty-state">nobody yet — be the first to sign in.</div>';
+    return;
+  }
+
+  wrap.innerHTML = all.map(e => {
+    const t = new Date(e.time);
+    const timeStr = t.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    return `<div class="name-card">
+      <div class="name-card-name">${escHtml(e.name)}</div>
+      ${e.msg ? `<div class="name-card-msg">"${escHtml(e.msg)}"</div>` : ''}
+      <div class="name-card-time">signed in at ${timeStr}</div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── TOAST ────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── CONFETTI ─────────────────────────────────────────────────
+function pop(el) {
+  const r    = el.getBoundingClientRect();
+  const cx   = r.left + r.width / 2;
+  const cy   = r.top  + r.height / 2;
+  const cols = ['#C98840','#D4692A','#1A3A2F','#F0C060','#FAF3E8','#3D5A8A'];
+
+  for (let i = 0; i < 30; i++) {
+    const d = document.createElement('div');
+    d.className = 'cdot';
+    const angle = (Math.random() * Math.PI * 2);
+    const dist  = Math.random() * 120 + 40;
+    d.style.cssText = `left:${cx}px;top:${cy}px;background:${cols[i % cols.length]};--dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist - 80}px;`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 950);
+  }
+}
+
+// Enter key submits
+document.getElementById('name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('msg-input').focus();
+});
+document.getElementById('msg-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) signIn();
+});
+
+// Init
+renderList();
+</script>
+</body>
+</html>
