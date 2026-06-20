@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>a day for Kelli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Sacramento&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest:      #1A3A2F;
+      --forest-mid:  #2D5445;
+      --forest-light:#4A7A68;
+      --gold:        #C9973A;
+      --gold-light:  #E8C97A;
+      --blush:       #F0C8D4;
+      --rose:        #D95F7A;
+      --cream:       #F7F2E8;
+      --warm-white:  #FDFAF5;
+      --ink:         #1C1410;
+      --muted:       #9A8878;
+      --divider:     #E5D8C8;
+    }
+
+    body {
+      font-family: 'Lato', -apple-system, sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      background: var(--forest);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 32px 120px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 60% at 10% 100%, rgba(217,95,122,0.38) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 90% 5%,  rgba(201,151,58,0.32) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 50% 2%,  rgba(240,200,212,0.12) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    /* SVG flower decorations */
+    .hero-flower {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+    .hf1 { width: 110px; top: 6%; left: -18px; transform: rotate(-20deg); }
+    .hf2 { width: 80px;  top: 4%; right: -10px; transform: rotate(30deg); opacity: 0.14; }
+    .hf3 { width: 60px;  bottom: 12%; left: 4%; transform: rotate(15deg); opacity: 0.12; }
+    .hf4 { width: 90px;  bottom: 8%; right: -8px; transform: rotate(-10deg); opacity: 0.15; }
+
+    /* Stars */
+    .star {
+      position: absolute;
+      color: var(--gold);
+      animation: twinkle ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.18; transform: scale(0.85); }
+      50%      { opacity: 0.65; transform: scale(1.1); }
+    }
+
+    /* Petal fall */
+    .petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .petal {
+      position: absolute;
+      top: -20px;
+      background: rgba(240,200,212,0.65);
+      border-radius: 50% 0 50% 0;
+      animation: petalfall linear infinite;
+    }
+    .petal:nth-child(1) { left:7%;  width:7px;  height:13px; animation-duration:10s; animation-delay:0s; }
+    .petal:nth-child(2) { left:19%; width:10px; height:18px; animation-duration:14s; animation-delay:-3s;  background:rgba(217,95,122,0.45); }
+    .petal:nth-child(3) { left:36%; width:6px;  height:11px; animation-duration:11s; animation-delay:-7s; }
+    .petal:nth-child(4) { left:52%; width:9px;  height:16px; animation-duration:16s; animation-delay:-2s;  background:rgba(201,151,58,0.35); border-radius:0 50% 0 50%; }
+    .petal:nth-child(5) { left:67%; width:8px;  height:14px; animation-duration:10s; animation-delay:-5s; }
+    .petal:nth-child(6) { left:80%; width:11px; height:19px; animation-duration:15s; animation-delay:-9s;  background:rgba(217,95,122,0.38); }
+    .petal:nth-child(7) { left:92%; width:7px;  height:12px; animation-duration:12s; animation-delay:-1s; }
+    .petal:nth-child(8) { left:45%; width:9px;  height:15px; animation-duration:17s; animation-delay:-6s;  background:rgba(240,200,212,0.5); border-radius:0 50% 0 50%; }
+    @keyframes petalfall {
+      0%   { transform:translateY(-20px) rotate(0deg);   opacity:0; }
+      8%   { opacity:0.8; }
+      88%  { opacity:0.25; }
+      100% { transform:translateY(105vh) rotate(700deg); opacity:0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .hero-for {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2px;
+    }
+
+    .hero-name {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(72px, 18vw, 108px);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 28px;
+      text-shadow: 0 6px 40px rgba(217,95,122,0.55), 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero-beach-name {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 5vw, 32px);
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      transition: opacity 0.25s;
+    }
+
+    .hero-city {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 22px;
+    }
+
+    .hero-vibes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+    }
+
+    .vibe-chip {
+      font-size: 11px;
+      font-weight: 300;
+      padding: 4px 13px;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .fp-chip {
+      font-size: 11px;
+      font-weight: 300;
+      padding: 4px 13px;
+      border: 1px solid rgba(201,151,58,0.38);
+      color: var(--gold-light);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: floatdown 2.2s ease-in-out infinite;
+    }
+    .scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      font-weight: 300;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+    }
+    @keyframes floatdown {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── BEACH PICKER (dark, continues hero) ── */
+    .picker-wrap {
+      background: var(--forest);
+      padding: 30px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .picker-heading {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 20px;
+      color: rgba(255,255,255,0.6);
+      padding: 0 24px;
+      margin-bottom: 14px;
+    }
+
+    .picker-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 24px 6px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .picker-scroll::-webkit-scrollbar { display: none; }
+
+    .bp-card {
+      flex-shrink: 0;
+      width: 155px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .bp-card:active { transform: scale(0.97); }
+    .bp-card.selected {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(240,200,212,0.45);
+    }
+
+    .bp-top { display:flex; align-items:center; gap:4px; margin-bottom:3px; }
+    .bp-name {
+      font-family: 'Cormorant Garant', serif;
+      font-weight: 400;
+      font-size: 15px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.2;
+    }
+    .bp-card.selected .bp-name { color: #fff; }
+    .bp-fire { font-size: 11px; }
+    .bp-local {
+      font-size: 9px;
+      padding: 1px 6px;
+      background: rgba(201,151,58,0.2);
+      color: var(--gold-light);
+      border: 1px solid rgba(201,151,58,0.28);
+      margin-left: 3px;
+    }
+    .bp-city  { font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:0.06em; margin-bottom:5px; }
+    .bp-vibe  { font-size:11px; color:rgba(255,255,255,0.42); line-height:1.4; margin-bottom:6px; }
+    .bp-budget { font-size:11px; color:var(--gold-light); opacity:0.75; }
+
+    /* ── MAIN CONTENT ── */
+    .main-content { background: var(--cream); padding-bottom: 80px; }
+
+    .content-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Dividers */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 40px 0 26px;
+    }
+    .divider-line { flex:1; height:1px; background:var(--divider); }
+    .divider-mark { font-size:11px; color:var(--gold); opacity:0.7; }
+
+    /* Section headings */
+    .section-title {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 30px;
+      color: var(--forest);
+      margin-bottom: 18px;
+      line-height: 1.15;
+    }
+
+    /* Intention / blurb */
+    .intention {
+      background: var(--warm-white);
+      border-left: 3px solid var(--rose);
+      padding: 26px 24px;
+      margin-top: 38px;
+    }
+
+    .intention-note {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 21px;
+      color: var(--forest);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .beach-blurb {
+      font-size: 15px;
+      color: #5A4A3A;
+      line-height: 1.78;
+      font-weight: 300;
+      transition: opacity 0.2s;
+    }
+
+    /* Meetup */
+    .meetup {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      background: var(--forest);
+    }
+
+    .meetup-icon { font-size: 20px; flex-shrink: 0; }
+
+    .meetup-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 4px;
+    }
+
+    .meetup-time {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.88);
+      border: none;
+      background: none;
+      outline: none;
+      width: 100%;
+      padding: 0;
+    }
+    .meetup-time::placeholder { color: rgba(255,255,255,0.22); }
+
+    /* Pack list */
+    .pack-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+    .pack-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--warm-white);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 14px;
+      font-weight: 300;
+      color: #4A3A2A;
+      user-select: none;
+      border: 1px solid transparent;
+      border-radius: 2px;
+    }
+
+    .pack-item.checked {
+      background: rgba(45,84,69,0.07);
+      border-color: rgba(45,84,69,0.13);
+    }
+    .pack-item.checked span:last-child {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #D8C8B8;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+      font-size: 11px;
+    }
+    .pack-item.checked .check-box {
+      background: var(--forest-mid);
+      border-color: var(--forest-mid);
+      color: #fff;
+    }
+    .pack-item.checked .check-box::after { content: '✓'; }
+
+    /* Food — editorial list */
+    .food-list {
+      border: 1px solid var(--divider);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .food-card {
+      background: var(--warm-white);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: background 0.18s;
+      border-left: 3px solid transparent;
+      border-bottom: 1px solid var(--divider);
+    }
+    .food-card:last-child { border-bottom: none; }
+    .food-card:active { background: #F5EEE4; }
+    .food-card.picked {
+      background: rgba(26,58,47,0.05);
+      border-left-color: var(--forest-mid);
+    }
+
+    .food-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .food-name {
+      font-family: 'Cormorant Garant', serif;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--ink);
+      flex: 1;
+      line-height: 1.2;
+    }
+    .food-card.picked .food-name { color: var(--forest); }
+
+    .price-tag {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 300;
+      margin-left: 10px;
+    }
+
+    .food-meta {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+
+    .food-note {
+      font-size: 13px;
+      color: #6A5848;
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    .pick-label   { font-size:12px; color:#C8B8A8; margin-top:9px; font-style:italic; }
+    .picked-label { font-size:12px; color:var(--forest-mid); font-style:italic; margin-top:9px; display:none; }
+    .food-card.picked .pick-label   { display:none; }
+    .food-card.picked .picked-label { display:block; }
+
+    /* Spot items */
+    .spot-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--warm-white);
+      border-radius: 2px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 14px;
+      font-weight: 300;
+      color: #4A3A2A;
+      line-height: 1.55;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+    .spot-item.done {
+      background: rgba(45,84,69,0.07);
+      border-color: rgba(45,84,69,0.13);
+    }
+    .spot-item.done span:last-child {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .spot-item .check-box { margin-top: 2px; flex-shrink: 0; }
+    .spot-item.done .check-box { background:var(--forest-mid); border-color:var(--forest-mid); color:#fff; }
+    .spot-item.done .check-box::after { content:'✓'; }
+
+    /* Parking */
+    .parking-card {
+      padding: 20px 22px;
+      background: var(--warm-white);
+      border-left: 3px solid var(--gold);
+      font-size: 14px;
+      font-weight: 300;
+      color: #5A4A3A;
+      line-height: 1.68;
+      border-radius: 2px;
+    }
+
+    /* Golden hour — cinematic */
+    .golden {
+      background: #0B1A12;
+      padding: 52px 32px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border-radius: 2px;
+    }
+
+    .golden::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 105%, rgba(217,95,122,0.32) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 40% at 85% 15%,  rgba(201,151,58,0.22) 0%, transparent 50%),
+        radial-gradient(ellipse 35% 30% at 15% 20%,  rgba(201,151,58,0.16) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .g-star {
+      position: absolute;
+      color: rgba(232,201,122,0.55);
+      animation: twinkle ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .golden-inner { position: relative; z-index: 1; }
+
+    .golden-script {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(44px, 12vw, 64px);
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 22px;
+      text-shadow: 0 4px 24px rgba(201,151,58,0.45);
+    }
+
+    .golden-text {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(17px, 4vw, 22px);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    /* Notes */
+    .notes-area {
+      width: 100%;
+      min-height: 130px;
+      background: var(--warm-white);
+      border: 1px solid var(--divider);
+      border-radius: 2px;
+      padding: 18px 18px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--ink);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.78;
+    }
+    .notes-area:focus { border-color: rgba(26,58,47,0.28); }
+    .notes-area::placeholder { color: #C4B4A4; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 52px 20px 32px;
+      color: #B8A898;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+    }
+    .footer-line { width: 48px; height: 1px; background:var(--divider); margin:0 auto 18px; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- Decorative SVG flowers -->
+  <svg class="hero-flower hf1" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(60,60)">
+      <ellipse rx="10" ry="28" fill="rgba(240,200,212,0.7)" transform="rotate(0)"/>
+      <ellipse rx="10" ry="28" fill="rgba(240,200,212,0.7)" transform="rotate(45)"/>
+      <ellipse rx="10" ry="28" fill="rgba(217,95,122,0.6)"  transform="rotate(90)"/>
+      <ellipse rx="10" ry="28" fill="rgba(217,95,122,0.6)"  transform="rotate(135)"/>
+      <circle r="12" fill="rgba(201,151,58,0.8)"/>
+      <circle r="5"  fill="rgba(255,230,150,0.9)"/>
+    </g>
+  </svg>
+
+  <svg class="hero-flower hf2" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(60,60)">
+      <ellipse rx="9" ry="26" fill="rgba(240,200,212,0.65)" transform="rotate(30)"/>
+      <ellipse rx="9" ry="26" fill="rgba(217,95,122,0.55)"  transform="rotate(90)"/>
+      <ellipse rx="9" ry="26" fill="rgba(240,200,212,0.65)" transform="rotate(150)"/>
+      <ellipse rx="9" ry="26" fill="rgba(217,95,122,0.55)"  transform="rotate(210)"/>
+      <ellipse rx="9" ry="26" fill="rgba(240,200,212,0.65)" transform="rotate(270)"/>
+      <ellipse rx="9" ry="26" fill="rgba(217,95,122,0.55)"  transform="rotate(330)"/>
+      <circle r="11" fill="rgba(201,151,58,0.75)"/>
+      <circle r="4"  fill="rgba(255,230,150,0.9)"/>
+    </g>
+  </svg>
+
+  <svg class="hero-flower hf3" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(60,60)">
+      <ellipse rx="8" ry="22" fill="rgba(240,200,212,0.6)" transform="rotate(0)"/>
+      <ellipse rx="8" ry="22" fill="rgba(217,95,122,0.5)"  transform="rotate(72)"/>
+      <ellipse rx="8" ry="22" fill="rgba(240,200,212,0.6)" transform="rotate(144)"/>
+      <ellipse rx="8" ry="22" fill="rgba(217,95,122,0.5)"  transform="rotate(216)"/>
+      <ellipse rx="8" ry="22" fill="rgba(240,200,212,0.6)" transform="rotate(288)"/>
+      <circle r="10" fill="rgba(201,151,58,0.7)"/>
+    </g>
+  </svg>
+
+  <svg class="hero-flower hf4" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(60,60)">
+      <ellipse rx="10" ry="28" fill="rgba(240,200,212,0.65)" transform="rotate(0)"/>
+      <ellipse rx="10" ry="28" fill="rgba(240,200,212,0.65)" transform="rotate(45)"/>
+      <ellipse rx="10" ry="28" fill="rgba(217,95,122,0.55)"  transform="rotate(90)"/>
+      <ellipse rx="10" ry="28" fill="rgba(217,95,122,0.55)"  transform="rotate(135)"/>
+      <circle r="12" fill="rgba(201,151,58,0.75)"/>
+      <circle r="5"  fill="rgba(255,230,150,0.9)"/>
+    </g>
+  </svg>
+
+  <!-- Stars scattered -->
+  <span class="star" style="top:11%;left:7%;font-size:10px;animation-delay:0s;animation-duration:3s;">✦</span>
+  <span class="star" style="top:7%;left:80%;font-size:9px;animation-delay:-1.4s;animation-duration:4.2s;">✦</span>
+  <span class="star" style="top:28%;left:93%;font-size:7px;animation-delay:-0.8s;animation-duration:3.6s;">✦</span>
+  <span class="star" style="top:68%;left:4%;font-size:8px;animation-delay:-2.2s;animation-duration:5s;">✦</span>
+  <span class="star" style="top:52%;left:90%;font-size:6px;animation-delay:-0.9s;animation-duration:4.8s;">✦</span>
+  <span class="star" style="top:38%;left:12%;font-size:7px;animation-delay:-3.1s;animation-duration:3.3s;">✦</span>
+  <span class="star" style="top:83%;left:78%;font-size:8px;animation-delay:-0.5s;animation-duration:5.5s;">✦</span>
+  <span class="star" style="top:20%;left:48%;font-size:6px;animation-delay:-2.7s;animation-duration:4s;opacity:0.2;">✦</span>
+
+  <!-- Petals -->
+  <div class="petals">
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-label">✦ juneteenth 2026 ✦</div>
+    <div class="hero-for">a day for</div>
+    <div class="hero-name">Kelli</div>
+    <div class="hero-beach-name" id="hero-beach">...</div>
+    <div class="hero-city" id="hero-city"></div>
+    <div class="hero-vibes" id="hero-vibes"></div>
+  </div>
+
+  <div class="scroll-hint"><span>choose your beach</span></div>
+</div>
+
+<!-- BEACH PICKER -->
+<div class="picker-wrap">
+  <div class="picker-heading">where do you want to go?</div>
+  <div class="picker-scroll" id="picker-scroll">
+    
+        <div class="bp-card" data-key="seal_beach" onclick="selectBeach('seal_beach')">
+          <div class="bp-top"><span class="bp-name">Seal Beach</span> <span class="bp-local">local</span></div>
+          <div class="bp-city">Seal Beach</div>
+          <div class="bp-vibe">small town · quiet pier</div>
+          <div class="bp-budget">~$15/person</div>
+        </div>
+        <div class="bp-card" data-key="belmont_shore" onclick="selectBeach('belmont_shore')">
+          <div class="bp-top"><span class="bp-name">Belmont Shore</span> <span class="bp-local">local</span></div>
+          <div class="bp-city">Long Beach</div>
+          <div class="bp-vibe">walkable · 2nd Street</div>
+          <div class="bp-budget">~$18/person</div>
+        </div>
+        <div class="bp-card" data-key="junipero" onclick="selectBeach('junipero')">
+          <div class="bp-top"><span class="bp-name">Junipero Beach</span> <span class="bp-local">local</span></div>
+          <div class="bp-city">Long Beach</div>
+          <div class="bp-vibe">local · low-key</div>
+          <div class="bp-budget">~$15/person</div>
+        </div>
+        <div class="bp-card" data-key="dockweiler" onclick="selectBeach('dockweiler')">
+          <div class="bp-top"><span class="bp-fire">🔥</span><span class="bp-name">Dockweiler State Beach</span></div>
+          <div class="bp-city">Playa del Rey</div>
+          <div class="bp-vibe">fire pits · local</div>
+          <div class="bp-budget">~$18/person</div>
+        </div>
+        <div class="bp-card" data-key="el_matador" onclick="selectBeach('el_matador')">
+          <div class="bp-top"><span class="bp-name">El Matador State Beach</span></div>
+          <div class="bp-city">Malibu</div>
+          <div class="bp-vibe">hidden · rocky</div>
+          <div class="bp-budget">~$20/person</div>
+        </div>
+        <div class="bp-card" data-key="zuma" onclick="selectBeach('zuma')">
+          <div class="bp-top"><span class="bp-name">Zuma Beach</span></div>
+          <div class="bp-city">Malibu</div>
+          <div class="bp-vibe">wide open · less crowded</div>
+          <div class="bp-budget">~$25/person</div>
+        </div>
+        <div class="bp-card" data-key="leo_carrillo" onclick="selectBeach('leo_carrillo')">
+          <div class="bp-top"><span class="bp-name">Leo Carrillo State Park</span></div>
+          <div class="bp-city">Malibu (north)</div>
+          <div class="bp-vibe">sea caves · tidepools</div>
+          <div class="bp-budget">~$20/person</div>
+        </div>
+        <div class="bp-card" data-key="manhattan" onclick="selectBeach('manhattan')">
+          <div class="bp-top"><span class="bp-name">Manhattan Beach</span></div>
+          <div class="bp-city">Manhattan Beach</div>
+          <div class="bp-vibe">clean · walkable</div>
+          <div class="bp-budget">~$20/person</div>
+        </div>
+        <div class="bp-card" data-key="venice" onclick="selectBeach('venice')">
+          <div class="bp-top"><span class="bp-name">Venice Beach</span></div>
+          <div class="bp-city">Venice / LA</div>
+          <div class="bp-vibe">energy · people watching</div>
+          <div class="bp-budget">~$22/person</div>
+        </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <div class="content-inner">
+
+    <div class="intention">
+      
+      <div class="beach-blurb" id="beach-blurb"></div>
+    </div>
+
+    <div class="meetup">
+      <div class="meetup-icon">🌅</div>
+      <div style="flex:1">
+        <div class="meetup-label">leaving around</div>
+        <input class="meetup-time" id="meetup" type="text" placeholder="what time..." oninput="saveGlobal('meetup',this.value)">
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">bring this</div>
+    <ul class="pack-list">
+      <li class="pack-item" data-id="sunscreen" onclick="togglePack(this)"><span class="check-box"></span><span>sunscreen</span></li>
+      <li class="pack-item" data-id="towels"    onclick="togglePack(this)"><span class="check-box"></span><span>towels</span></li>
+      <li class="pack-item" data-id="water"     onclick="togglePack(this)"><span class="check-box"></span><span>water bottles</span></li>
+      <li class="pack-item" data-id="snacks"    onclick="togglePack(this)"><span class="check-box"></span><span>snacks</span></li>
+      <li class="pack-item" data-id="speaker"   onclick="togglePack(this)"><span class="check-box"></span><span>speaker</span></li>
+      <li class="pack-item" data-id="blanket"   onclick="togglePack(this)"><span class="check-box"></span><span>blanket</span></li>
+      <li class="pack-item" data-id="charger"   onclick="togglePack(this)"><span class="check-box"></span><span>portable charger</span></li>
+      <li class="pack-item" data-id="cash"      onclick="togglePack(this)"><span class="check-box"></span><span>cash (for food)</span></li>
+      <li class="pack-item" data-id="change"    onclick="togglePack(this)"><span class="check-box"></span><span>change of clothes</span></li>
+      <li class="pack-item" id="pack-lighter" style="display:none" data-id="lighter" onclick="togglePack(this)"><span class="check-box"></span><span>lighter</span></li>
+    </ul>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">eat well</div>
+    <div class="food-list" id="food-list"></div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">while you're there</div>
+    <ul class="pack-list" id="spots-list"></ul>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">find your quiet</div>
+    <ul class="pack-list" id="smoke-list"></ul>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="golden">
+      <span class="g-star" style="top:14%;left:9%;font-size:8px;animation-delay:0s;animation-duration:3s;">✦</span>
+      <span class="g-star" style="top:18%;left:87%;font-size:7px;animation-delay:-1.2s;animation-duration:4s;">✦</span>
+      <span class="g-star" style="top:72%;left:7%;font-size:6px;animation-delay:-2.1s;animation-duration:3.8s;">✦</span>
+      <span class="g-star" style="top:68%;left:90%;font-size:7px;animation-delay:-0.6s;animation-duration:5s;">✦</span>
+      <span class="g-star" style="top:42%;left:4%;font-size:5px;animation-delay:-1.7s;animation-duration:4.2s;">✦</span>
+      <span class="g-star" style="top:38%;left:94%;font-size:5px;animation-delay:-2.8s;animation-duration:3.2s;">✦</span>
+      <span class="g-star" style="top:52%;left:50%;font-size:5px;animation-delay:-3s;animation-duration:6s;opacity:0.28;">✦</span>
+      <div class="golden-inner">
+        <div class="golden-script">golden hour</div>
+        <div class="golden-text">when the sun starts dropping, find somewhere quieter. just the two of you. you'll know when.</div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">parking</div>
+    <div class="parking-card" id="parking-card"></div>
+
+    <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+    <div class="section-title">your notes</div>
+    <textarea class="notes-area" id="notes" placeholder="write anything down..." oninput="saveGlobal('notes',this.value)"></textarea>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-line"></div>
+  made with love · juneteenth 2026
+</div>
+
+<script>
+const BEACHES = {"seal_beach": {"name": "Seal Beach", "city": "Seal Beach", "vibe": ["small town", "quiet pier", "local", "not touristy", "chill"], "parking": "Free street parking on Main St and side streets", "fire_pit": false, "notes": "15min from Long Beach and feels like a different world. Small town main street, old pier, way less crowded. Good for actually talking and being present. Nobody's performing here.", "food_nearby": [{"name": "Nick's Deli", "type": "Deli / sandwiches", "price": "$", "distance": "0.2mi", "note": "Cash only, been there forever, solid sandwiches"}, {"name": "Crema Cafe", "type": "Coffee / breakfast", "price": "$", "distance": "0.1mi", "note": "Good spot to start the day, not a chain, local energy"}, {"name": "Walt's Wharf", "type": "Seafood", "price": "$$$", "distance": "0.3mi", "note": "Splurge option — fresh fish, good atmosphere, worth it for a special day"}, {"name": "Bogarts Coffee", "type": "Coffee / smoothies", "price": "$", "distance": "0.4mi", "note": "Chill, local, good acai bowls"}], "spots_nearby": ["Seal Beach Pier — one of the oldest wooden piers in CA, walk to the end at sunset", "Main Street — small shops, no chains, just walk it", "Surfside Colony beach — gated but the stretch just south is quiet and barely anyone goes"], "smoke_spots": ["South end past the volleyball courts — beach gets empty fast", "Under the pier on the south side — sheltered, low traffic", "The jetty rocks at the north end — blocked from the main beach, good view"], "budget_per_person": 15}, "belmont_shore": {"name": "Belmont Shore", "city": "Long Beach", "vibe": ["walkable", "2nd Street", "food and beach", "local scene", "day to night"], "parking": "Street park off 2nd St side streets — free, just need to walk a couple blocks", "fire_pit": false, "notes": "Best of both worlds — actual beach plus a whole street of food and shops. 2nd Street is Long Beach's most walkable strip. Good for an all-day thing that flows from beach to dinner without driving.", "food_nearby": [{"name": "Potholder Cafe", "type": "Breakfast diner", "price": "$", "distance": "1mi", "note": "The Long Beach breakfast spot. Real portions, no frills, been there forever. Line moves fast."}, {"name": "Open Sesame", "type": "Lebanese", "price": "$$", "distance": "0.3mi", "note": "2nd Street staple — shawarma, hummus, pita. Different from the usual, genuinely good."}, {"name": "Beachwood BBQ", "type": "BBQ", "price": "$$", "distance": "0.5mi", "note": "Local craft BBQ on 2nd. Good ribs and mac, good vibe, not a chain."}, {"name": "The Ordinarie", "type": "Bar / food", "price": "$$", "distance": "0.4mi", "note": "Good if the day rolls into evening — solid food, local crowd, low-key."}], "spots_nearby": ["Naples Island — rent a gondola or just walk the canals, genuinely beautiful", "Belmont Pier — sunset from the end of the pier is the move", "2nd Street strip — window shop, grab coffee, no destination needed"], "smoke_spots": ["East end of the beach past the crowds toward Junipero — thins out after dark", "Under the Belmont Pier south side — sheltered, usually clear at night", "Granada Beach just north of the pier — quieter pocket, less traffic"], "budget_per_person": 18}, "junipero": {"name": "Junipero Beach", "city": "Long Beach", "vibe": ["local", "low-key", "no tourists", "east side LB", "easy parking"], "parking": "Free street parking on Junipero Ave — usually available", "fire_pit": false, "notes": "The real Long Beach beach. No pier, no boardwalk circus, just the water and some locals. East side of LB, easy to get to, easy to find a quiet spot.", "food_nearby": [{"name": "Bake N Broil", "type": "Breakfast diner", "price": "$", "distance": "1.5mi", "note": "Long Beach institution on Atlantic. French toast, real portions, no frills"}, {"name": "Panxa Cocina", "type": "Latin fusion", "price": "$$", "distance": "2mi", "note": "4th Street corridor, not standard Mexican — more refined, good cocktails, worth it"}, {"name": "Beachwood BBQ", "type": "BBQ / craft beer", "price": "$$", "distance": "2mi", "note": "Local spot, good ribs, craft beer if that's the move"}], "spots_nearby": ["2nd Street / Belmont Shore — 10min walk north, shops and food strip", "Naples Island canals — 15min walk, romantic canal neighborhood, weirdly beautiful", "Alamitos Bay — calm water on the bay side, completely different vibe from the ocean"], "smoke_spots": ["Walk east past 54th Place — beach population drops off significantly", "The bike path heading toward Belmont Shores at dusk — less foot traffic", "Parking lot at the dead end of Junipero — usually empty, tucked away"], "budget_per_person": 15}, "dockweiler": {"name": "Dockweiler State Beach", "city": "Playa del Rey", "vibe": ["fire pits", "local", "sunsets", "laid back", "night vibes"], "parking": "$5–12/day", "fire_pit": true, "notes": "One of the few LA beaches with public fire pits. Planes from LAX fly overhead — loud but lowkey cool at night. Less tourist energy.", "food_nearby": [{"name": "Dulan's Soul Food Kitchen", "type": "Soul food", "price": "$", "distance": "4mi", "note": "Real food — fried chicken, oxtail, candied yams. Not tourist-y, not basic. Crenshaw institution."}, {"name": "Hilltop Coffee + Kitchen", "type": "Brunch / coffee", "price": "$$", "distance": "5mi", "note": "Inglewood spot with a vibe. Good for a late morning start before heading to the sand."}, {"name": "Bludso's BBQ", "type": "BBQ", "price": "$$", "distance": "6mi", "note": "Get it to go and bring it to the beach. Ribs, links, mac. Worth the detour."}], "smoke_spots": ["Walk north past parking lot 3 — the beach thins out fast, no lifeguards, more space", "The grass strip between the lots and PCH — low foot traffic, good wind cover from the dunes", "South end near the jetty — far from the families, good view"], "spots_nearby": ["Ballona Wetlands — bike path along the water, calm", "Manhattan Beach Pier — 10min south, cleaner vibe if you want to walk"], "budget_per_person": 18}, "el_matador": {"name": "El Matador State Beach", "city": "Malibu", "vibe": ["hidden", "rocky", "scenic", "intimate", "less crowded"], "parking": "$8/day (small lot — get there early or it's full)", "fire_pit": false, "notes": "Sea caves, rock formations, feels like a secret. Hike down is short but steep. Worth it.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "3mi", "note": "Classic PCH spot, clam chowder, fish and chips, cash-friendly"}, {"name": "Trancas Market", "type": "Deli / grocery", "price": "$", "distance": "1mi", "note": "Grab sandwiches and snacks before heading down"}], "spots_nearby": ["Zuma Beach — 10min south if you want more space to spread out", "Leo Carrillo — 15min north, sea caves and tidepools"], "budget_per_person": 20}, "zuma": {"name": "Zuma Beach", "city": "Malibu", "vibe": ["wide open", "less crowded", "good waves", "chill"], "parking": "$3–8/day (lot)", "fire_pit": false, "notes": "One of the longest beaches in LA. Less touristy than Santa Monica. Good for just existing.", "food_nearby": [{"name": "Cholada Thai Beach Cuisine", "type": "Thai", "price": "$", "distance": "0.5mi", "note": "Cash only, tiny, worth it"}, {"name": "Reel Inn", "type": "Seafood / casual", "price": "$$", "distance": "2mi", "note": "Fish tacos on PCH, unpretentious"}, {"name": "Vintage Grocers Malibu", "type": "Grab & go", "price": "$", "distance": "3mi", "note": "Good deli section, make your own beach snacks"}], "spots_nearby": ["Point Dume State Preserve — cliff walk above the ocean, low foot traffic", "El Matador Beach — 10min north, rocky coves, feels hidden"], "budget_per_person": 25}, "leo_carrillo": {"name": "Leo Carrillo State Park", "city": "Malibu (north)", "vibe": ["sea caves", "tidepools", "camping", "nature", "remote feeling"], "parking": "$12/day", "fire_pit": false, "notes": "Sea caves you can actually walk into. Tidepools. Feels far from the city even though it's not. Good for an adventure day.", "food_nearby": [{"name": "Neptune's Net", "type": "Seafood shack", "price": "$$", "distance": "1mi", "note": "Right on PCH, motorcycles and beach people, good vibe"}, {"name": "Trancas Market", "type": "Deli", "price": "$", "distance": "8mi", "note": "Stock up before you get there — nothing closer"}], "spots_nearby": ["Nicholas Flat Trail — hike above the park with ocean views", "El Matador — 15min south for a different kind of cove beach"], "budget_per_person": 20}, "manhattan": {"name": "Manhattan Beach", "city": "Manhattan Beach", "vibe": ["clean", "walkable", "pier", "mellow", "local feel"], "parking": "Street parking is free but competitive — aim for neighborhoods east of the strand", "fire_pit": false, "notes": "Quieter than Venice, cleaner than Santa Monica. Good pier. Nice for a walk and food combo.", "food_nearby": [{"name": "Fishing with Dynamite", "type": "Seafood", "price": "$$$", "distance": "0.2mi", "note": "Splurge spot — skip if budget is tight"}, {"name": "Uncle Bill's Pancake House", "type": "Breakfast", "price": "$", "distance": "0.3mi", "note": "Classic diner, good prices, go before the beach"}, {"name": "Hermosa Beach taco trucks", "type": "Tacos", "price": "$", "distance": "1mi south", "note": "Walk or drive down to Hermosa for cheaper eats"}], "spots_nearby": ["The Strand — paved path from Manhattan to Redondo, good for a walk", "Hermosa Beach — 1mi south, more relaxed, cheaper food scene"], "budget_per_person": 20}, "venice": {"name": "Venice Beach", "city": "Venice / LA", "vibe": ["energy", "people watching", "boardwalk", "weird and fun", "busy"], "parking": "$15–25/day (overpriced lots) — street parking in the neighborhoods saves money", "fire_pit": false, "notes": "Loud, chaotic, entertaining. Not for a quiet day but great if you want stimulation. Skate park, muscle beach, murals everywhere.", "food_nearby": [{"name": "Gjusta", "type": "Bakery / deli", "price": "$$", "distance": "0.5mi", "note": "Expensive but the sandwiches are legitimately great — split one"}, {"name": "Tacos Por Favor", "type": "Tacos", "price": "$", "distance": "1mi", "note": "Cheap, fast, legit Mexican — Santa Monica adjacent"}, {"name": "La Cabaña", "type": "Mexican", "price": "$", "distance": "1mi", "note": "Margaritas and chips, solid prices for the area"}, {"name": "Abbot Kinney food trucks", "type": "Various", "price": "$–$$", "distance": "0.3mi", "note": "Hit or miss by day, usually something good on weekends"}], "spots_nearby": ["Abbot Kinney Blvd — walkable, good window shopping and coffee", "Venice Canals — 5min walk from the beach, quiet residential canals, completely different vibe", "Santa Monica Pier — 2mi north, tourist-y but iconic"], "budget_per_person": 22}};
+const DEFAULT = "seal_beach";
+const GLOBAL_KEY = "beach_day_global";
+const PRICE_LABEL = {"$":"budget-friendly","$$":"mid","$$$":"splurge"};
+
+function saveGlobal(field, val) {
+  const d = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
+  d[field] = val;
+  localStorage.setItem(GLOBAL_KEY, JSON.stringify(d));
+}
+
+function beachKey(key) { return 'beach_' + key; }
+
+function saveBeach(key, field, val) {
+  const d = JSON.parse(localStorage.getItem(beachKey(key)) || '{}');
+  d[field] = val;
+  localStorage.setItem(beachKey(key), JSON.stringify(d));
+}
+
+function loadBeach(key) {
+  return JSON.parse(localStorage.getItem(beachKey(key)) || '{}');
+}
+
+let currentBeach = null;
+
+function selectBeach(key) {
+  if (!BEACHES[key]) return;
+  currentBeach = key;
+  saveGlobal('selected', key);
+
+  document.querySelectorAll('.bp-card').forEach(c => c.classList.toggle('selected', c.dataset.key === key));
+
+  const b = BEACHES[key];
+
+  document.getElementById('hero-beach').textContent = b.name;
+  document.getElementById('hero-city').textContent   = b.city;
+
+  const vc = document.getElementById('hero-vibes');
+  vc.innerHTML = b.vibe.map(v => `<span class="vibe-chip">${v}</span>`).join('') +
+    (b.fire_pit ? '<span class="fp-chip">🔥 fire pits</span>' : '');
+
+  document.getElementById('beach-blurb').textContent = b.notes;
+
+  document.getElementById('pack-lighter').style.display = b.fire_pit ? '' : 'none';
+
+  const fd = loadBeach(key);
+
+  const fl = document.getElementById('food-list');
+  fl.innerHTML = b.food_nearby.map((f, i) => {
+    const id = 'food' + i;
+    const picked = fd.food === id ? 'picked' : '';
+    const label = PRICE_LABEL[f.price] || f.price;
+    return `<div class="food-card ${picked}" data-id="${id}" onclick="pickFood(this)">
+      <div class="food-top"><span class="food-name">${f.name}</span><span class="price-tag">${label}</span></div>
+      <div class="food-meta">${f.type} · ${f.distance}</div>
+      <div class="food-note">${f.note}</div>
+      <div class="pick-label">tap to choose this one</div>
+      <div class="picked-label">✓ this is the pick</div>
+    </div>`;
+  }).join('');
+
+  const sl = document.getElementById('spots-list');
+  sl.innerHTML = (b.spots_nearby || []).map((s, i) => {
+    const id = 'spot' + i;
+    const done = (fd.spots || []).includes(id) ? 'done' : '';
+    return `<li class="spot-item ${done}" data-id="${id}" onclick="toggleSpot(this)"><span class="check-box"></span><span>${s}</span></li>`;
+  }).join('');
+
+  const smk = document.getElementById('smoke-list');
+  smk.innerHTML = (b.smoke_spots || []).map((s, i) => {
+    const id = 'smoke' + i;
+    const done = (fd.spots || []).includes(id) ? 'done' : '';
+    return `<li class="spot-item ${done}" data-id="${id}" onclick="toggleSpot(this)"><span class="check-box"></span><span>${s}</span></li>`;
+  }).join('');
+
+  document.getElementById('parking-card').innerHTML =
+    b.parking + `<br><small style="color:#B8A888;margin-top:5px;display:block">~$${b.budget_per_person}/person estimated</small>`;
+
+  const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
+  document.querySelectorAll('.pack-item').forEach(el => {
+    el.classList.toggle('checked', (gd.packed || []).includes(el.dataset.id));
+  });
+}
+
+function togglePack(el) {
+  el.classList.toggle('checked');
+  const checked = [...document.querySelectorAll('.pack-item.checked')].map(e => e.dataset.id);
+  saveGlobal('packed', checked);
+}
+
+function toggleSpot(el) {
+  el.classList.toggle('done');
+  const done = [...document.querySelectorAll('.spot-item.done')].map(e => e.dataset.id);
+  saveBeach(currentBeach, 'spots', done);
+}
+
+function pickFood(el) {
+  document.querySelectorAll('.food-card').forEach(c => c.classList.remove('picked'));
+  el.classList.add('picked');
+  saveBeach(currentBeach, 'food', el.dataset.id);
+}
+
+const gd = JSON.parse(localStorage.getItem(GLOBAL_KEY) || '{}');
+if (gd.meetup) document.getElementById('meetup').value = gd.meetup;
+if (gd.notes)  document.getElementById('notes').value  = gd.notes;
+selectBeach(gd.selected || DEFAULT);
+
+setTimeout(() => {
+  const sel = document.querySelector('.bp-card.selected');
+  if (sel) sel.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+}, 100);
+</script>
+</body>
+</html>
