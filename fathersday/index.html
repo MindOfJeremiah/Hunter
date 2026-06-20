@@ -6,6 +6,7 @@
   <title>father's day · who's here?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Sacramento&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -666,7 +667,7 @@
   </div>
 
   <div class="btn-row">
-    <button class="btn-share" id="btn-send" onclick="doSend()">text them →</button>
+    <button class="btn-share" id="btn-send" onclick="doSend()">send card →</button>
     <button class="btn-copy" id="btn-copy" onclick="doCopy()">copy →</button>
   </div>
 </div>
@@ -853,27 +854,44 @@ function buildBody(d) {
   return greeting + d.body + sign;
 }
 
-// Text button — opens Messages/iMessage with number + message pre-filled
-function doSend() {
+// Send button — captures card as image + shares via native share sheet, falls back to SMS
+async function doSend() {
   const d = getMsgData();
-  if (!d.body)    { showToast('write your message first ✏️'); document.getElementById('msg-body').focus();    return; }
-  if (!d.toPhone) { showToast('add their phone number');      document.getElementById('msg-to-phone').focus(); return; }
+  if (!d.body) { showToast('write your message first ✏️'); document.getElementById('msg-body').focus(); return; }
 
   const text  = buildBody(d);
-  const phone = d.toPhone.replace(/\D/g, ''); // strip dashes, spaces, parens
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const sep   = isAndroid ? '?' : '&'; // iOS uses & Android uses ?
+  const title = d.toName ? `happy father's day, ${d.toName} 🖤` : `happy father's day 🖤`;
 
-  showToast('sending 🖤');
+  showToast('making your card 🖤');
   pop(document.getElementById('btn-send'));
 
+  // Try image share — capture card + Web Share API with file
+  if (typeof html2canvas !== 'undefined' && navigator.canShare) {
+    try {
+      const card   = document.querySelector('.msg-card-wrap');
+      const canvas = await html2canvas(card, { scale: 2.5, backgroundColor: '#FDF6EC', useCORS: true, logging: false });
+      const blob   = await new Promise(r => canvas.toBlob(r, 'image/png'));
+      const file   = new File([blob], 'happy-fathers-day.png', { type: 'image/png' });
+
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title, text });
+        showToast('sent 🖤');
+        return;
+      }
+    } catch(e) { /* user cancelled or not supported — fall through */ }
+  }
+
+  // SMS deep link fallback
+  if (!d.toPhone) { showToast('add their phone number to text it'); document.getElementById('msg-to-phone').focus(); return; }
+  const phone = d.toPhone.replace(/\D/g, '');
+  const sep   = /Android/i.test(navigator.userAgent) ? '?' : '&';
   setTimeout(() => {
     const a = document.createElement('a');
     a.href = `sms:${phone}${sep}body=${encodeURIComponent(text)}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-  }, 500);
+  }, 400);
 }
 
 // Copy button — clipboard, always works
