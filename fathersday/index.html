@@ -661,8 +661,12 @@
     <div class="msg-sign">— <span id="msg-sign-name">you</span></div>
   </div>
 
+  <div class="field">
+    <input id="msg-to-phone" type="tel" placeholder="their phone number" inputmode="tel" autocomplete="tel">
+  </div>
+
   <div class="btn-row">
-    <button class="btn-share" id="btn-share" onclick="doShare()">share →</button>
+    <button class="btn-share" id="btn-send" onclick="doSend()">text them →</button>
     <button class="btn-copy" id="btn-copy" onclick="doCopy()">copy →</button>
   </div>
 </div>
@@ -829,6 +833,7 @@ function getMsgData() {
     toName:   document.getElementById('msg-to-name').value.trim(),
     fromName: document.getElementById('msg-from-name').value.trim(),
     body:     document.getElementById('msg-body').value.trim(),
+    toPhone:  document.getElementById('msg-to-phone').value.trim(),
   };
 }
 
@@ -842,39 +847,15 @@ function buildBody(d) {
   return d.body + (d.fromName ? `\n\n— ${d.fromName}` : '');
 }
 
-// Share button — Web Share API on mobile, clipboard copy on desktop
-async function doShare() {
+// Text button — opens Messages/iMessage with number + message pre-filled
+function doSend() {
   const d = getMsgData();
   if (!d.body) { showToast('write your message first ✏️'); document.getElementById('msg-body').focus(); return; }
+  if (!d.toPhone) { showToast('add their phone number'); document.getElementById('msg-to-phone').focus(); return; }
 
   const text  = buildBody(d);
-  const title = buildSubject(d.toName);
-
-  if (navigator.share) {
-    try {
-      await navigator.share({ title, text });
-      showToast('message sent 🖤');
-      pop(document.getElementById('btn-share'));
-    } catch(e) {
-      // user cancelled — do nothing
-    }
-  } else {
-    // Desktop: copy to clipboard
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch(e) {
-      // Old browser fallback
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
-    }
-    showToast('copied — paste it anywhere 🖤');
-    pop(document.getElementById('btn-share'));
-  }
+  const phone = d.toPhone.replace(/\s/g, '');
+  window.location.href = `sms:${phone}?body=${encodeURIComponent(text)}`;
 }
 
 // Copy button — clipboard, always works
