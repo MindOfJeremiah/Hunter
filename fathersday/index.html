@@ -458,15 +458,6 @@
     }
     .msg-sign span { color: var(--ink); }
 
-    /* Email row */
-    .email-row {
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
-      margin-bottom: 14px;
-    }
-    .email-row .field { flex: 1; margin-bottom: 0; }
-
     .btn-row {
       display: flex;
       gap: 10px;
@@ -490,7 +481,7 @@
     }
     .btn-share:active { background: #B85A22; transform: scale(0.98); }
 
-    .btn-email {
+    .btn-copy {
       flex: 1;
       padding: 17px;
       background: transparent;
@@ -506,13 +497,18 @@
       transition: all 0.18s;
       -webkit-tap-highlight-color: transparent;
     }
-    .btn-email:active { background: rgba(26,58,47,0.06); transform: scale(0.98); }
-    .btn-email.armed {
-      background: var(--green);
-      color: #fff;
-      border-color: var(--green);
+    .btn-copy:active { background: rgba(26,58,47,0.06); transform: scale(0.98); }
+
+    /* sign-in live count */
+    .signin-count {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 300;
+      font-style: italic;
+      font-family: 'Cormorant Garant', serif;
+      min-height: 20px;
     }
-    .btn-email.armed:active { background: #122B20; }
 
     /* ── FOOTER ── */
     .footer {
@@ -619,6 +615,7 @@
       <textarea id="msg-input" placeholder="say something (optional)..." autocorrect="off"></textarea>
     </div>
     <button class="btn-signin" onclick="signIn()">i'm here →</button>
+    <div class="signin-count" id="signin-count"></div>
   </div>
 </div>
 
@@ -664,16 +661,9 @@
     <div class="msg-sign">— <span id="msg-sign-name">you</span></div>
   </div>
 
-  <!-- Email row — slides open when they tap "send by email" -->
-  <div class="email-row" id="email-row">
-    <div class="field">
-      <input id="msg-to-email" type="email" placeholder="their email address" autocomplete="off" inputmode="email">
-    </div>
-  </div>
-
   <div class="btn-row">
     <button class="btn-share" id="btn-share" onclick="doShare()">share →</button>
-    <button class="btn-email" id="btn-email" onclick="doEmail()">send by email</button>
+    <button class="btn-copy" id="btn-copy" onclick="doCopy()">copy →</button>
   </div>
 </div>
 
@@ -692,17 +682,12 @@ function startTyping() {
   const el = document.getElementById('typing-text');
   const cursor = document.getElementById('cursor');
   let i = 0;
-  el.textContent = '';
+  let html = '';
 
   const tick = setInterval(() => {
-    const ch = MSG[i];
-    if (ch === '\n') {
-      el.innerHTML += '<br>';
-    } else {
-      el.textContent += ch;
-      // Re-append cursor (text node strips it)
-    }
-    i++;
+    const ch = MSG[i++];
+    html += (ch === '\n') ? '<br>' : ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    el.innerHTML = html;
     if (i >= MSG.length) {
       clearInterval(tick);
       setTimeout(() => {
@@ -737,12 +722,16 @@ function signIn() {
 
   renderList();
   showToast(`got you, ${name} 🖤`);
-  pop(document.querySelector('.btn-signin'));
 
-  // Scroll to list
+  const btn = document.querySelector('.btn-signin');
+  pop(btn);
+  btn.textContent = "you're in ✓";
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = "i'm here →"; btn.disabled = false; }, 2400);
+
   setTimeout(() => {
-    document.getElementById('names-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 400);
+    document.querySelector('.list-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 600);
 }
 
 // ── STORE ────────────────────────────────────────────────────
@@ -760,6 +749,13 @@ function renderList() {
   const chip = document.getElementById('count-chip');
 
   chip.textContent = all.length === 1 ? '1 here' : `${all.length} here`;
+
+  const countEl = document.getElementById('signin-count');
+  if (countEl) {
+    countEl.textContent = all.length === 0 ? '' :
+      all.length === 1 ? `${escHtml(all[0].name)} signed in — scroll down to see the wall` :
+      `${all.length} people signed in — scroll down to see the wall`;
+  }
 
   if (all.length === 0) {
     wrap.innerHTML = '<div class="empty-state">nobody yet — be the first to sign in.</div>';
@@ -833,7 +829,6 @@ function getMsgData() {
     toName:   document.getElementById('msg-to-name').value.trim(),
     fromName: document.getElementById('msg-from-name').value.trim(),
     body:     document.getElementById('msg-body').value.trim(),
-    toEmail:  document.getElementById('msg-to-email').value.trim(),
   };
 }
 
@@ -850,7 +845,7 @@ function buildBody(d) {
 // Share button — Web Share API on mobile, clipboard copy on desktop
 async function doShare() {
   const d = getMsgData();
-  if (!d.body) { document.getElementById('msg-body').focus(); return; }
+  if (!d.body) { showToast('write your message first ✏️'); document.getElementById('msg-body').focus(); return; }
 
   const text  = buildBody(d);
   const title = buildSubject(d.toName);
@@ -882,25 +877,25 @@ async function doShare() {
   }
 }
 
-// Email button — opens mailto: directly
-function doEmail() {
+// Copy button — clipboard, always works
+async function doCopy() {
   const d = getMsgData();
-  if (!d.body) { document.getElementById('msg-body').focus(); return; }
-  triggerEmail(d);
-}
+  if (!d.body) { showToast('write your message first ✏️'); document.getElementById('msg-body').focus(); return; }
 
-function triggerEmail(d) {
-  if (!d.body) return;
-  const subject = encodeURIComponent(buildSubject(d.toName));
-  const body    = encodeURIComponent(buildBody(d));
-  const mailto  = `mailto:${d.toEmail}?subject=${subject}&body=${body}`;
-  window.location.href = mailto;
-  showToast('opening email app 🖤');
-}
-
-// On desktop (no Web Share), relabel the share button to "copy →"
-if (!navigator.share) {
-  document.getElementById('btn-share').textContent = 'copy →';
+  const text = buildBody(d);
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch(e) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  showToast('copied — paste it anywhere 🖤');
+  pop(document.getElementById('btn-copy'));
 }
 
 // Init
