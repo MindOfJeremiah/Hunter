@@ -846,7 +846,11 @@ function buildSubject(toName) {
 }
 
 function buildBody(d) {
-  return d.body + (d.fromName ? `\n\n— ${d.fromName}` : '');
+  const greeting = d.toName
+    ? `happy father's day, ${d.toName} 🖤\n\n`
+    : `happy father's day 🖤\n\n`;
+  const sign = d.fromName ? `\n\n— ${d.fromName}` : '';
+  return greeting + d.body + sign;
 }
 
 // Text button — opens Messages/iMessage with number + message pre-filled
@@ -860,11 +864,16 @@ function doSend() {
   const isAndroid = /Android/i.test(navigator.userAgent);
   const sep   = isAndroid ? '?' : '&'; // iOS uses & Android uses ?
 
-  const a = document.createElement('a');
-  a.href = `sms:${phone}${sep}body=${encodeURIComponent(text)}`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  showToast('sending 🖤');
+  pop(document.getElementById('btn-send'));
+
+  setTimeout(() => {
+    const a = document.createElement('a');
+    a.href = `sms:${phone}${sep}body=${encodeURIComponent(text)}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }, 500);
 }
 
 // Copy button — clipboard, always works
