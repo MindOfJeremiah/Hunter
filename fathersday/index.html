@@ -856,8 +856,15 @@ function doSend() {
   if (!d.toPhone) { showToast('add their phone number');      document.getElementById('msg-to-phone').focus(); return; }
 
   const text  = buildBody(d);
-  const phone = d.toPhone.replace(/\s/g, '');
-  window.location.href = `sms:${phone}?body=${encodeURIComponent(text)}`;
+  const phone = d.toPhone.replace(/\D/g, ''); // strip dashes, spaces, parens
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const sep   = isAndroid ? '?' : '&'; // iOS uses & Android uses ?
+
+  const a = document.createElement('a');
+  a.href = `sms:${phone}${sep}body=${encodeURIComponent(text)}`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // Copy button — clipboard, always works
