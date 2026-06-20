@@ -458,18 +458,13 @@
     }
     .msg-sign span { color: var(--ink); }
 
-    /* Email reveal */
+    /* Email row */
     .email-row {
       display: flex;
       gap: 10px;
       align-items: stretch;
       margin-bottom: 14px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.3s;
-      opacity: 0;
     }
-    .email-row.open { max-height: 80px; opacity: 1; }
     .email-row .field { flex: 1; margin-bottom: 0; }
 
     .btn-row {
@@ -833,8 +828,6 @@ document.getElementById('msg-from-name').addEventListener('input', e => {
 });
 
 // ── MESSAGE SECTION ──────────────────────────────────────────
-let emailArmed = false; // true once they've tapped "send by email" and email row is open
-
 function getMsgData() {
   return {
     toName:   document.getElementById('msg-to-name').value.trim(),
@@ -854,47 +847,45 @@ function buildBody(d) {
   return d.body + (d.fromName ? `\n\n— ${d.fromName}` : '');
 }
 
-// Share button — uses Web Share API if available, else falls back to email
+// Share button — Web Share API on mobile, clipboard copy on desktop
 async function doShare() {
   const d = getMsgData();
   if (!d.body) { document.getElementById('msg-body').focus(); return; }
 
+  const text  = buildBody(d);
+  const title = buildSubject(d.toName);
+
   if (navigator.share) {
     try {
-      await navigator.share({
-        title: buildSubject(d.toName),
-        text: buildBody(d),
-      });
+      await navigator.share({ title, text });
       showToast('message sent 🖤');
       pop(document.getElementById('btn-share'));
     } catch(e) {
       // user cancelled — do nothing
     }
   } else {
-    // No Web Share API — fall back to opening email
-    triggerEmail(d);
+    // Desktop: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch(e) {
+      // Old browser fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    showToast('copied — paste it anywhere 🖤');
+    pop(document.getElementById('btn-share'));
   }
 }
 
-// Email button — first tap reveals email field, second tap (armed) sends
+// Email button — opens mailto: directly
 function doEmail() {
   const d = getMsgData();
   if (!d.body) { document.getElementById('msg-body').focus(); return; }
-
-  const row = document.getElementById('email-row');
-  const btn = document.getElementById('btn-email');
-
-  if (!emailArmed) {
-    // First tap: reveal email input
-    row.classList.add('open');
-    emailArmed = true;
-    btn.classList.add('armed');
-    btn.textContent = 'send →';
-    setTimeout(() => document.getElementById('msg-to-email').focus(), 350);
-    return;
-  }
-
-  // Second tap: actually send
   triggerEmail(d);
 }
 
@@ -907,9 +898,9 @@ function triggerEmail(d) {
   showToast('opening email app 🖤');
 }
 
-// Hide share button if Web Share not supported (desktop fallback)
+// On desktop (no Web Share), relabel the share button to "copy →"
 if (!navigator.share) {
-  document.getElementById('btn-share').style.display = 'none';
+  document.getElementById('btn-share').textContent = 'copy →';
 }
 
 // Init
